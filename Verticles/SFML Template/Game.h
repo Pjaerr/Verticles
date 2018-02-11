@@ -5,7 +5,6 @@
 #include "Ball.h"
 #include "Level.h"
 
-
 class Game
 {
 	public:
