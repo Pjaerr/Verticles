@@ -1,35 +1,30 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 #include <Box2D\Box2D.h>
-
 #include "Ball.h"
-#include "Level.h"
 
 class Game
 {
 	public:
 		Game(float width, float height);
 		~Game();
+		void startGame();
 		
 	private:
-		sf::Texture * m_textures[1]; //Convert to a texture map.
+		//Box2D Stuff
+		const b2Vec2 mk_gravity = b2Vec2(0.0f, 9.81f);
+		b2World *m_world;
+		void update(float timestep);
 
-
-		sf::RenderWindow * window;
-		
+		//SFML Stuff
+		sf::RenderWindow * m_window;
 		sf::Clock clock;
-		
 		sf::View view;
 		
-		b2World *world;
-		
+		//My Stuff
+		Ball * m_ball;
 		int points;
-		
 		float maxTimeInSeconds;
-		
-		Ball ball;
 		//Level level;
-		
-		
-		void startGame();
+		int GameLoop();
 };

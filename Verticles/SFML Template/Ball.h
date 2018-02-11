@@ -41,4 +41,4 @@ class Ball : public sf::Sprite, public Rigidbody2D
 	private:
 		//! The radius of the Rigidbody2D::m_body associated with this object.
 		float m_radius;
-}
+};

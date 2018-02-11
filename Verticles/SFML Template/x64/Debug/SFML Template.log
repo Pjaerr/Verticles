@@ -1,0 +1,13 @@
+﻿  Rigidbody2D.cpp
+c:\users\pjaer\desktop\projects\wip\verticles\verticles\sfml template\rigidbody2d.h(2): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  Main.cpp
+c:\users\pjaer\desktop\projects\wip\verticles\verticles\sfml template\main.cpp(1): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  Key.cpp
+c:\users\pjaer\desktop\projects\wip\verticles\verticles\sfml template\key.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Game.cpp
+c:\users\pjaer\desktop\projects\wip\verticles\verticles\sfml template\game.h(2): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  Control.cpp
+c:\users\pjaer\desktop\projects\wip\verticles\verticles\sfml template\ball.h(1): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  Ball.cpp
+c:\users\pjaer\desktop\projects\wip\verticles\verticles\sfml template\ball.h(1): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  Generating Code...

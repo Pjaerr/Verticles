@@ -35,5 +35,5 @@ class Control
 		void applyForceToPlayer(Key key); 
 
 		//! An array of Key objects corresponding to (QWERTYUIOP).
-		std::array<Key, 10> m_keys;
+		std::array<Key, 10> m_keys = {};
 };

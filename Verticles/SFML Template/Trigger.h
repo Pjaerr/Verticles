@@ -17,7 +17,9 @@ class Trigger
 		//! Returns the position of the Box2D body on this object.
 		sf::Vector2f getPosition();
 	
+private:
+
 	protected:
 		//! The Box2D body that is used by this object.
 		b2Body *m_body;
-}
+};

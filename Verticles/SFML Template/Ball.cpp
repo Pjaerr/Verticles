@@ -1,5 +1,5 @@
 #include "Ball.h"
-
+#include <iostream>
 
 Ball::Ball(const sf::Vector2f& position, const float radius, const float orientation, b2World * world)
 {

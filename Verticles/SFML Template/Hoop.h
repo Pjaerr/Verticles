@@ -21,4 +21,4 @@ class Hoop : public sf::Sprite, public Trigger
 		
 		//! This object is marked for deletion as a contact with the Ball has occured.
 		bool m_bCanBeDestroyed;
-}
+};

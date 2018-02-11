@@ -1,0 +1,15 @@
+﻿  Ball.cpp
+  Control.cpp
+  Game.cpp
+Game.cpp(5): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+  Key.cpp
+  Main.cpp
+  Rigidbody2D.cpp
+Ball.obj : error LNK2001: unresolved external symbol "public: class b2Body * __thiscall b2World::CreateBody(struct b2BodyDef const *)" (?CreateBody@b2World@@QAEPAVb2Body@@PBUb2BodyDef@@@Z)
+Ball.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall b2CircleShape::ComputeMass(struct b2MassData *,float)const " (?ComputeMass@b2CircleShape@@UBEXPAUb2MassData@@M@Z)
+Ball.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall b2CircleShape::ComputeAABB(struct b2AABB *,struct b2Transform const &,int)const " (?ComputeAABB@b2CircleShape@@UBEXPAUb2AABB@@ABUb2Transform@@H@Z)
+Ball.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall b2CircleShape::RayCast(struct b2RayCastOutput *,struct b2RayCastInput const &,struct b2Transform const &,int)const " (?RayCast@b2CircleShape@@UBE_NPAUb2RayCastOutput@@ABUb2RayCastInput@@ABUb2Transform@@H@Z)
+Ball.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall b2CircleShape::TestPoint(struct b2Transform const &,struct b2Vec2 const &)const " (?TestPoint@b2CircleShape@@UBE_NABUb2Transform@@ABUb2Vec2@@@Z)
+Ball.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall b2CircleShape::GetChildCount(void)const " (?GetChildCount@b2CircleShape@@UBEHXZ)
+Ball.obj : error LNK2001: unresolved external symbol "public: virtual class b2Shape * __thiscall b2CircleShape::Clone(class b2BlockAllocator *)const " (?Clone@b2CircleShape@@UBEPAVb2Shape@@PAVb2BlockAllocator@@@Z)
+C:\Users\Pjaer\Desktop\Projects\WIP\Verticles\Verticles\Release\Verticles.exe : fatal error LNK1120: 7 unresolved externals

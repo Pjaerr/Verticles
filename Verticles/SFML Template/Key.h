@@ -11,6 +11,9 @@
 class Key : public sf::Drawable
 {
 public:
+	//! The default Key constructor.
+	Key();
+
 	//! The Key constructor sets the name and position of this Key.
 	Key(std::string name, sf::Vector2f position);
 

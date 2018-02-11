@@ -43,7 +43,7 @@ class Rigidbody2D
 
 	protected:
 		//! The box2D body that controls all of the physics for the object inheriting this class.
-		b2Body *m_body;
+		b2Body *m_body = nullptr;
 
 		//!Applies the member density, friction and resitution to the referenced fixture.
 		/*!
