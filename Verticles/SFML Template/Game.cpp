@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game(float width, float height)
 {
@@ -30,6 +31,22 @@ void Game::update(float timestep)
 {
 	/*TEMP*/
 	m_world->Step(timestep, 7, 5);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		m_ball->applyForce(0, 100, 0);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	{
+		m_ball->applyForce(-100, 100, 0);
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	{
+		m_ball->applyForce(100, 100, 0);
+	}
+	
 	m_ball->update();
 	/*TEMP*/
 }

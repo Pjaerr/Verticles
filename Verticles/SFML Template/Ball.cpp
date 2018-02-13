@@ -28,6 +28,9 @@ Ball::Ball(const sf::Vector2f& position, const float radius, const float orienta
 void Ball::update()
 {
 	b2Vec2 position = m_body->GetPosition();
+
+	std::cout << position.y << std::endl;
+
 	setPosition(position.x, position.y);
 
 	float angle = -m_body->GetAngle() * RAD2DEG;

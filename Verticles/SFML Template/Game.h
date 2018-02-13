@@ -12,7 +12,7 @@ class Game
 		
 	private:
 		//Box2D Stuff
-		const b2Vec2 mk_gravity = b2Vec2(0.0f, 9.81f);
+		const b2Vec2 mk_gravity = b2Vec2(0.0f, 200.0f);
 		b2World *m_world;
 		void update(float timestep);
 

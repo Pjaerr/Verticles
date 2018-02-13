@@ -1,4 +1,5 @@
 #include "Rigidbody2D.h"
+#include <iostream>
 
 /*When passed a reference to a b2FixtureDef, it will set that fixture's density, friction and restitution to be
 equal to the const member variables for those respective values. It does not set the shape associated with the fixture,
@@ -17,5 +18,5 @@ sf::Vector2f Rigidbody2D::getPosition()
 
 void Rigidbody2D::applyForce(float x, float y, float intensity)
 {
-
+	m_body->ApplyLinearImpulse(b2Vec2(x, -y), m_body->GetWorldCenter(), false);
 }
