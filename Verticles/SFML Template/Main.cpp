@@ -4,8 +4,8 @@
 
 int main()
 {
-	Game game = Game(600, 400);
-	game.startGame();
+	Game game = Game(800, 600, "Verticles");
+	game.run();
 
 	return 0;
 }

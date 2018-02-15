@@ -13,39 +13,31 @@
 * initialise the Box2D body in its own constructor.
 */
 
-#define DEG2RAD 0.017453f;
-#define RAD2DEG 57.29577f;
+#define DEG2RAD 0.017453f; //!< To convert degrees to radians.
+#define RAD2DEG 57.29577f; //!< To convert radians to degrees.
 
 class Rigidbody2D
 {
 	public:
-		//!Returns the position of the protected b2Body.
+		/*! \brief Returns the position of the protected b2Body.*/
 		sf::Vector2f getPosition();
 
-		//!Applies a force to the b2Body.
+		/*! \brief Applies a force to the b2Body.
 		/*!
-		\param x The direction on the x.
-		\param y The direction on the y.
-		\param intensity The amount of force to apply.
+		\param x The intensity of the force on the x.
+		\param y The intensity of the force on the y.
 		*/
-		void applyForce(float x, float y, float intensity);
+		void applyForce(float x, float y);
 	
 	private:
-		
-		//! The density to be applied to the fixture that m_body uses.
-		const float mk_fDensity = 1.0f;
-
-		//! The friction to be applied to the fixture that m_body uses.
-		const float mk_fFriction = 0.4f;
-
-		//! The restitution to be applied to the fixture that m_body uses.
-		const float mk_fRestitution = 0.6f;
+		const float mk_fDensity = 1.0f; //!< The density to be applied to the fixture that m_body uses.
+		const float mk_fFriction = 0.4f; //!< The friction to be applied to the fixture that m_body uses.
+		const float mk_fRestitution = 0.6f; //!< The restitution to be applied to the fixture that m_body uses.
 
 	protected:
-		//! The box2D body that controls all of the physics for the object inheriting this class.
-		b2Body *m_body = nullptr;
+		b2Body *m_body = nullptr; //!< The box2D body that controls all of the physics for the object inheriting this class.
 
-		//!Applies the member density, friction and resitution to the referenced fixture.
+		/*! \brief Applies the member density, friction and resitution to the referenced fixture.
 		/*!
 		\param &fixture A reference to the fixture on which to apply density, friction and resitution.
 		*/
