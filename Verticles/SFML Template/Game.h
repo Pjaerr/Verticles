@@ -1,8 +1,9 @@
 #pragma once
-#include <SFML\Graphics.hpp>
 
-#include "Ball.h"
+#include <SFML\Graphics.hpp>
 #include "Physics.h"
+#include "Ball.h"
+#include "Platform.h"
 
 /*! \file Game.h
 * Game.h is the basis for the 'program flow'. It is intended to be reusable as a class
@@ -21,24 +22,24 @@ class Game
 		\param height The height of the window.
 		\param name The title of the window.
 		*/
-		Game(float width, float height, std::string name);
+		Game(float fWidth, float fHeight, std::string name);
 
 		/*!\brief Cleans up any pointers.*/
 		~Game();
 
 		/*! \brief Starts the game loop which calls the other functions.*/
-		void run();
+		void m_run();
 		
 	private:
-		sf::RenderWindow * m_window; //!< The window used for the game.
-		sf::Clock clock; //!< The clock used to track the time that has elapsed.
+		sf::RenderWindow * m_window = nullptr; //!< The window used for the game.
+		sf::Clock m_clock; //!< The clock used to track the time that has elapsed.
 		sf::View m_view; //!< Responsible for scaling to any aspect ratio and mapping box2D coordinates to sfml coordinates.
 		int m_iWindowWidth;	//!< The width of the window.
 		int m_iWindowHeight; //!< The height of the window.
 		sf::Vector2f m_physicalWorldSize; //!< The size of the world in meters. 800x600 resolution => 8x6 meters
 
 		/*! \brief The Update function gets called every frame and holds the elapsed time since it was last called.*/
-		void Update(float elapsedTime);
+		void Update(float fElapsedTime);
 
 		/*! \brief The Start function is called once before the game loop is started.*/
 		void Start();
@@ -46,11 +47,8 @@ class Game
 		/*! \brief The Render function is called every frame and should be used exclusively for the drawing of objects.*/
 		void Render();
 
-		Physics physics; //!< The object holding all non-object specific Box2D stuff.
+		Physics m_physics; //!< The object holding all non-object specific Box2D stuff.
 
-		Ball * m_ball = nullptr; //!< The ball that is used in the game.
-
-		int points;	//!< The number of points the player has.
-
-		float maxTimeInSeconds; //!< The max amount of time the player is allowed to achieve thier objective.
+		Ball * m_testBall;
+		Platform * m_testPlatform;
 };

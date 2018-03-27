@@ -6,7 +6,7 @@ Physics::Physics()
 }
 
 /*!
-*	The default constructor stores the gravity, velocity iterations and position iterations
+*	The constructor stores the gravity, velocity iterations and position iterations
 *	and then sets up a new b2World with the given gravity.
 */
 Physics::Physics(b2Vec2 gravity, int iVelocityIterations, int iPositionIterations)

@@ -6,17 +6,17 @@
 *	needed later. Finally, it sets up an sf::View using the given width and height multiplied by
 *	0.01 to get the window dimensions as meters for use with Box2D.
 */
-Game::Game(float width, float height, std::string name)
+Game::Game(float fWidth, float fHeight, std::string name)
 {
-	m_window = new sf::RenderWindow(sf::VideoMode(width, height), name);
+	m_window = new sf::RenderWindow(sf::VideoMode(fWidth, fHeight), name);
 
-	m_iWindowWidth = width;
-	m_iWindowHeight = height;
+	m_iWindowWidth = fWidth;
+	m_iWindowHeight = fHeight;
 
-	//! The physical world in meters for conversion between SFML coordinates and Box2D coordinates.
-	m_physicalWorldSize = sf::Vector2f(width * 0.01f, height * 0.01f);
+	//The physical world in meters for conversion between SFML coordinates and Box2D coordinates.
+	m_physicalWorldSize = sf::Vector2f(fWidth * 0.01f, fHeight * 0.01f);
 
-	//! sf::View set at (0,0) with a size of the physical world size.
+	//sf::View set at (0,0) with a size of the physical world size.
 	m_view = sf::View(sf::Vector2f(0.0f, 0.0f), m_physicalWorldSize);
 
 	m_window->setView(m_view);
@@ -25,15 +25,9 @@ Game::Game(float width, float height, std::string name)
 Game::~Game()
 {
 	delete m_window;
-	delete m_ball;
+	delete m_testBall;
+	delete m_testPlatform;
 }
-
-
-/*(Note for devlog/report etc) Any code not specific to the Game class itself should be written inside of the Start(), Update() or
-Render() functions depending upon its purpose or desired run-time. This is to ensure that the Game class is as re-usable as possible 
-in different scenarios. So even if the game I am making didn't use a Ball class or anything to do with Box2D such as a b2World object,
-the Game class here could still be used easily without having to deconstruct the layout of the class, at which point it would probably
-be more efficient to just remake the class alltogether.*/
 
 /*!
 *	The Start function is called once before the game loop has been started, just after the initialisation
@@ -42,11 +36,10 @@ be more efficient to just remake the class alltogether.*/
 */
 void Game::Start()
 {
-	physics = Physics(b2Vec2(0.0f, 10.0f), 7, 5); //! Setup the Physics object, creating the b2World.
+	m_physics = Physics(b2Vec2(0.0f, 10.0f), 7, 5); //Setup the Physics object, creating the b2World.
 
-	//! Setup the ball.
-	m_ball = new Ball(sf::Vector2f(0.0f, 0.0f), 0.02f, 0.0f, physics.getWorld());
-	m_ball->setupTextureFromFile("./resources/Textures/ball.png");
+	m_testBall = new Ball("./resources/Textures/ball.png", b2Vec2(0.0f, -3.0f), 0.1f, m_physics.getWorld());
+	m_testPlatform = new Platform(b2Vec2(0.0f, 0.0f), b2Vec2(4.0f, 0.5f), 4.0f, m_physics.getWorld());
 }
 
 /*!
@@ -54,28 +47,16 @@ void Game::Start()
 *	This function should essentially be used as the	game loop wherein any game behaviour that isn't 
 *	related to the drawing of objects should be implemented.
 */
-void Game::Update(float elapsedTime)
+void Game::Update(float fElapsedTime)
 {
-	physics.updateWorld(elapsedTime); //! Calls b2World::Step() with the given elapsedTime.
-
-	m_ball->update(); //! Keep the Ball sprite in sync with its b2Body.
-
-	/*Temporary force testing (WILL BE MOVED TO CONTROL.CPP)*/
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	/*Temporary way to exit window.*/
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
-		m_ball->applyForce(0.0f, 0.5f, 0.0f);
+		m_window->close();
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	{
-		m_ball->applyForce(0.5f, 0.0f, 0.0f);
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	{
-		m_ball->applyForce(-0.5f, 0.0f, 0.0f);
-	}
-	/*Temporary force testing (WILL BE MOVED TO CONTROL.CPP)*/
+	m_physics.updateWorld(fElapsedTime); //Calls b2World::Step() with the given elapsedTime.
+	m_testBall->m_update();
 }
 
 /*!
@@ -84,7 +65,8 @@ void Game::Update(float elapsedTime)
 */
 void Game::Render()
 {
-	m_window->draw(*m_ball);
+	m_window->draw(*m_testBall);
+	m_window->draw(*m_testPlatform);
 }
 
 
@@ -92,15 +74,15 @@ void Game::Render()
 *	Initiates and handles the game loop; This function should be the only externally called function. 
 *	it will start the game loop, in which the other functions (Start, Update and Render) will be called.
 */
-void Game::run()
+void Game::m_run()
 {
-	sf::Event event; //! Used when handling SFML events.
+	sf::Event event; //Used when handling SFML events.
 
-	float fFrameTime = 1.0f / 60.0f; //! 60 FPS.
+	float fFrameTime = 1.0f / 60.0f; //60 FPS.
 
-	clock = sf::Clock();
+	m_clock = sf::Clock(); //Initialise the SFML Clock.
 
-	Start(); //! Call the Start function once.
+	Start(); //Run any initialisation code.
 
 	while (m_window->isOpen())
 	{
@@ -112,16 +94,16 @@ void Game::run()
 			}
 		}
 
-		float fElapsedTime = clock.getElapsedTime().asSeconds(); //! Elapsed time in seconds.
+		float fElapsedTime = m_clock.getElapsedTime().asSeconds(); //Elapsed time in seconds.
 
-		if (fElapsedTime > fFrameTime) //! Lock Update calls to 60 frames per second.
+		if (fElapsedTime > fFrameTime) //Lock Update calls to 60 frames per second.
 		{
-			Update(fElapsedTime); //! Call the Update function with the elapsed time every frame.
-			clock.restart();
+			Update(fElapsedTime); //Call the Update function with the elapsed time every frame.
+			m_clock.restart();
 		}
 
 		m_window->clear();
-		Render(); //! Call the Render function every frame.
+		Render(); //Call the Render function every frame.
 		m_window->display();
 	}
 }

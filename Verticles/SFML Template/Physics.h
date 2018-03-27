@@ -15,7 +15,7 @@ class Physics
 		*/
 		Physics(b2Vec2 gravity, int iVelocityIterations, int iPositionIterations);
 
-		/*! \brief The function that updates the world when called.*/
+		/*! \brief The function that updates the physics world when called.*/
 		/*!
 		\param fElapsedTime The time that has elapsed since it was last called.
 		*/

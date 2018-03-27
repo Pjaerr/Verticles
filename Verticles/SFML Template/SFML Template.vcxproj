@@ -150,24 +150,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
-    <ClCompile Include="Control.cpp" />
+    <ClCompile Include="Body.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Key.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Physics.cpp" />
-    <ClCompile Include="Rigidbody2D.cpp" />
+    <ClCompile Include="Platform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
-    <ClInclude Include="ContactListener.h" />
-    <ClInclude Include="Control.h" />
+    <ClInclude Include="Body.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Hoop.h" />
-    <ClInclude Include="Key.h" />
-    <ClInclude Include="Level.h" />
     <ClInclude Include="Physics.h" />
-    <ClInclude Include="Rigidbody2D.h" />
-    <ClInclude Include="Trigger.h" />
+    <ClInclude Include="Platform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
