@@ -1,11 +1,11 @@
 #pragma once
 #include <Box2D\Box2D.h>
+#include "ContactListener.h"
 
 class Physics
 {
 	public:
-		/*! \brief Default constructor to stop errors when defining a Physics object in the header file of a class.*/
-		Physics();
+		~Physics();
 
 		/*! \brief The constructor for the Physics class. Sets up the b2World.*/
 		/*!
@@ -27,6 +27,7 @@ class Physics
 	private:
 		int m_iVelocityIterations; //!< The number of velocity iterations on each world update.
 		int m_iPositionIterations; //!< The number of position iterations on each world update.
+		ContactListener m_contactListener;
 		b2Vec2 mk_gravity; //!< The gravity this b2World uses.
-		b2World *m_world; //!< Pointer to the b2World the game uses.
+		b2World *m_world = nullptr; //!< Pointer to the b2World the game uses.
 };

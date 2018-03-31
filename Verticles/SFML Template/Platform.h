@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-class Platform : public sf::Drawable, public Body
+class Platform : public Body, public sf::Drawable
 {
 	private:
 		sf::RectangleShape m_rect; //!< The shape drawn the the screen.
@@ -14,6 +14,10 @@ class Platform : public sf::Drawable, public Body
 		*	\param textureFilePath The path to the texture this object's sprite should use.
 		*/
 		void m_setupRect();
+
+		/*OVERRIDEN FUNCTIONALITY FROM BODY.H*/
+		void onCollisionEnter(Body * otherBody);
+		void onCollisionExit(Body * otherBody);
 
 	public:
 		/*! \brief Intialises the dynamic body and calls the m_setupSprite function.

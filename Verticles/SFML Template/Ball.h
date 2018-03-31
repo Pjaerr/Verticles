@@ -7,7 +7,7 @@
 * dynamic bodies that have a starting position and will fall as per gravity at the start of a level.
 */
 
-class Ball : public sf::Drawable,  public Body
+class Ball : public Body, public sf::Drawable
 {
 	private:
 		sf::Sprite m_sprite; //!< The sprite that is drawn when this object is passed into window.draw()
@@ -20,6 +20,10 @@ class Ball : public sf::Drawable,  public Body
 		*/
 		void m_setupSprite(std::string textureFilePath);
 
+		/*OVERRIDEN FUNCTIONALITY FROM BODY.H*/
+		void onCollisionEnter(Body * otherBody);
+		void onCollisionExit(Body * otherBody);
+
 	public:
 		/*! \brief Intialises the dynamic body and calls the m_setupSprite function.
 		*	\param textureFilePath The path to the texture this object's sprite should use.
@@ -28,6 +32,8 @@ class Ball : public sf::Drawable,  public Body
 		*	\param world Pointer to the b2World being used to manage the physics.
 		*/
 		Ball(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * world);
+
+		
 
 		/*! \brief Sets the position and rotation of this object's sprite to that of the body.*/
 		void m_update();

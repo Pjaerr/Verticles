@@ -30,3 +30,13 @@ void Platform::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(m_rect);
 }
+
+void Platform::onCollisionEnter(Body * otherBody)
+{
+	
+}
+
+void Platform::onCollisionExit(Body * otherBody)
+{
+	
+}

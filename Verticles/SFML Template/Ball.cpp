@@ -9,6 +9,16 @@ Ball::Ball(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * wor
 	m_setupSprite(textureFilePath);
 }
 
+void Ball::onCollisionEnter(Body * otherBody)
+{
+	circle.setFillColor(sf::Color::Blue);
+}
+
+void Ball::onCollisionExit(Body * otherBody)
+{
+	circle.setFillColor(sf::Color::Red);
+}
+
 /*! Initialises the sprite as per the texture file path and this object's dynamic body's 
 * position, rotation and radius.
 */

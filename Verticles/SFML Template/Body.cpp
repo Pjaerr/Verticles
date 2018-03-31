@@ -1,6 +1,5 @@
 #include "Body.h"
 
-/*! Returns, as an sf::Vector2f, the position of this object's b2Body.*/
 b2Vec2 Body::getPosition()
 {
 	return b2Vec2(m_body->GetPosition().x, m_body->GetPosition().y);
@@ -21,6 +20,26 @@ b2Vec2 Body::getSize()
 	return m_size;
 }
 
+/*SHOULD BE OVERRIDDEN ON THE CHILD*/
+void Body::onCollisionEnter(Body * otherBody)
+{
+}
+
+void Body::onCollisionExit(Body * otherBody)
+{
+}
+
+/*void Body::onCollisionEnter(Body * otherBody)
+{
+	//Generic body has collided. This should be overidden in the base class to carry out functionality on collision.
+}
+
+void Body::onCollisionExit(Body * otherBody)
+{
+	//Generic body has left a collision. This should be overidden in the base class to carry out functionality on exit collision.
+}*/
+
+
 
 /*!	Sets the friction, density and restitution of this dynamic body. Must be called before
 setting up the dynamic body.*/
@@ -31,19 +50,22 @@ void Body::setAttributes(float fDensity, float fFriction, float fRestitution)
 	m_fRestitution = fRestitution;
 }
 
+/*! The function that sets up the fixture, shape and body of this class. It should be called from one of the
+more shape specific setupBodyAs* functions.*/
 void Body::setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position, float fRotation, b2World * world, void * self, bool isSensor)
 {
 	b2BodyDef bodyDef;
 	b2FixtureDef fixtureDef;
 
 	bodyDef.type = bodyType;
+
 	bodyDef.position.Set(position.x, position.y);
-	bodyDef.angle = fRotation * DEG2RAD;
+
+	bodyDef.angle = fRotation * DEG2RAD; //Set body rotation to fRotation in radians.
 	
 
 	m_body = world->CreateBody(&bodyDef);
 	m_body->SetUserData(self);
-
 
 	fixtureDef.shape = shape;
 
@@ -59,8 +81,11 @@ void Body::setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position,
 	}
 
 	m_body->CreateFixture(&fixtureDef);
+
+	
 }
 
+/*! Sets up this body as a box.*/
 void Body::setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, float fRotation, b2World * world, void * self, bool isSensor)
 {
 	b2PolygonShape boxShape;
@@ -71,6 +96,7 @@ void Body::setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, flo
 	setupBody(bodyType, &boxShape, position, fRotation, world, self, isSensor);
 }
 
+/*! Sets up this body as a circle.*/
 void Body::setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius, b2World * world, void * self, bool isSensor)
 {
 	b2CircleShape circleShape;

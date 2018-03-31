@@ -47,7 +47,7 @@ class Game
 		/*! \brief The Render function is called every frame and should be used exclusively for the drawing of objects.*/
 		void Render();
 
-		Physics m_physics; //!< The object holding all non-object specific Box2D stuff.
+		Physics * m_physics; //!< The object holding all non-object specific Box2D stuff.
 
 		Ball * m_testBall;
 		Platform * m_testPlatform;

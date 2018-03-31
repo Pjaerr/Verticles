@@ -27,6 +27,7 @@ Game::~Game()
 	delete m_window;
 	delete m_testBall;
 	delete m_testPlatform;
+	delete m_physics;
 }
 
 /*!
@@ -36,10 +37,10 @@ Game::~Game()
 */
 void Game::Start()
 {
-	m_physics = Physics(b2Vec2(0.0f, 10.0f), 7, 5); //Setup the Physics object, creating the b2World.
+	m_physics = new Physics(b2Vec2(0.0f, 10.0f), 7, 5); //Setup the Physics object, creating the b2World.
 
-	m_testBall = new Ball("./resources/Textures/ball.png", b2Vec2(0.0f, -3.0f), 0.1f, m_physics.getWorld());
-	m_testPlatform = new Platform(b2Vec2(0.0f, 0.0f), b2Vec2(4.0f, 0.5f), 4.0f, m_physics.getWorld());
+	m_testBall = new Ball("./resources/Textures/ball.png", b2Vec2(0.0f, -3.0f), 0.1f, m_physics->getWorld());
+	m_testPlatform = new Platform(b2Vec2(0.0f, 0.0f), b2Vec2(4.0f, 0.5f), 4.0f, m_physics->getWorld());
 }
 
 /*!
@@ -55,7 +56,7 @@ void Game::Update(float fElapsedTime)
 		m_window->close();
 	}
 
-	m_physics.updateWorld(fElapsedTime); //Calls b2World::Step() with the given elapsedTime.
+	m_physics->updateWorld(fElapsedTime); //Calls b2World::Step() with the given elapsedTime.
 	m_testBall->m_update();
 }
 

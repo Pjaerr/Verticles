@@ -1,8 +1,8 @@
 #include "Physics.h"
 
-Physics::Physics()
+Physics::~Physics()
 {
-
+	delete m_world;
 }
 
 /*!
@@ -16,6 +16,8 @@ Physics::Physics(b2Vec2 gravity, int iVelocityIterations, int iPositionIteration
 	m_iPositionIterations = iPositionIterations;
 
 	m_world = new b2World(mk_gravity);
+
+	m_world->SetContactListener(&m_contactListener);
 }
 
 /*!
