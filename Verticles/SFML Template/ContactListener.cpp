@@ -1,5 +1,6 @@
 #include "ContactListener.h"
 
+/*! Called when two bodies begin to touch.*/
 void ContactListener::BeginContact(b2Contact * contact)
 {
 	b2Body* b2bodyA = contact->GetFixtureA()->GetBody();
@@ -19,6 +20,7 @@ void ContactListener::BeginContact(b2Contact * contact)
 	}
 }
 
+/*! Called when two bodies stop touching.*/
 void ContactListener::EndContact(b2Contact * contact)
 {
 	b2Body* b2bodyA = contact->GetFixtureA()->GetBody();

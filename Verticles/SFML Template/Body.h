@@ -28,7 +28,14 @@ public:
 	/*! \brief Returns the size set when the body was created.*/
 	b2Vec2 getSize();
 
+	/*! Should be overwritten by child class. Whatever is inside of the function will be called when
+	the body inherited by the child collides with another body.
+	*\param otherBody The other body involved in the collision.*/
 	virtual void onCollisionEnter(Body * otherBody);
+
+	/*! Should be overwritten by child class. Whatever is inside of the function will be called when
+	the body inherited by the child collides with another body.
+	*\param otherBody The other body involved in the collision.*/
 	virtual void onCollisionExit(Body * otherBody);
 
 	private:

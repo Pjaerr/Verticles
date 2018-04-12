@@ -20,7 +20,6 @@ b2Vec2 Body::getSize()
 	return m_size;
 }
 
-/*SHOULD BE OVERRIDDEN ON THE CHILD*/
 void Body::onCollisionEnter(Body * otherBody)
 {
 }
@@ -28,16 +27,6 @@ void Body::onCollisionEnter(Body * otherBody)
 void Body::onCollisionExit(Body * otherBody)
 {
 }
-
-/*void Body::onCollisionEnter(Body * otherBody)
-{
-	//Generic body has collided. This should be overidden in the base class to carry out functionality on collision.
-}
-
-void Body::onCollisionExit(Body * otherBody)
-{
-	//Generic body has left a collision. This should be overidden in the base class to carry out functionality on exit collision.
-}*/
 
 
 
