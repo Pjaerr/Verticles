@@ -6,14 +6,28 @@ itself.*/
 Ball::Ball(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * world)
 {
 	setupBodyAsCircle(b2_dynamicBody, pos, fRadius, world, this, false);
+
+	m_setTag("Ball");
+
 	m_setupSprite(textureFilePath);
 }
 
+/*! Functionality overridden from Body::onCollisionEnter(Body * otherBody)*/
 void Ball::onCollisionEnter(Body * otherBody)
 {
-	circle.setFillColor(sf::Color::Blue);
+	if (otherBody->m_tag == "Goal")
+	{
+		circle.setFillColor(sf::Color::Magenta);
+		std::cout << "Ball has touched a goal" << std::endl;
+	}
+	else
+	{
+		circle.setFillColor(sf::Color::Blue);
+	}
+	
 }
 
+/*! Functionality overridden from Body::onCollisionExit(Body * otherBody)*/
 void Ball::onCollisionExit(Body * otherBody)
 {
 	circle.setFillColor(sf::Color::Red);

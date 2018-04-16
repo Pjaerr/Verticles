@@ -1,9 +1,7 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
-#include "Physics.h"
-#include "Ball.h"
-#include "Platform.h"
+#include "Level.h"
 
 /*! \file Game.h
 * Game.h is the basis for the 'program flow'. It is intended to be reusable as a class
@@ -47,8 +45,5 @@ class Game
 		/*! \brief The Render function is called every frame and should be used exclusively for the drawing of objects.*/
 		void Render();
 
-		Physics * m_physics; //!< The object holding all non-object specific Box2D stuff.
-
-		Ball * m_testBall;
-		Platform * m_testPlatform;
+		Level * m_level;
 };

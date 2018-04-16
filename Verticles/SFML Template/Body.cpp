@@ -58,6 +58,8 @@ void Body::setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position,
 
 	fixtureDef.shape = shape;
 
+	m_bIsSensor = isSensor;
+
 	if (isSensor)
 	{
 		fixtureDef.isSensor = true;
@@ -94,6 +96,11 @@ void Body::setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius
 	
 
 	setupBody(bodyType, &circleShape, position, 0.0f, world, self, isSensor);
+}
+
+void Body::m_setTag(std::string tag)
+{
+	m_tag = tag;
 }
 
 

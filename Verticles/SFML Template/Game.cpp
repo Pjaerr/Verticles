@@ -19,15 +19,15 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	//sf::View set at (0,0) with a size of the physical world size.
 	m_view = sf::View(sf::Vector2f(0.0f, 0.0f), m_physicalWorldSize);
 
+	m_level = new Level();
+
 	m_window->setView(m_view);
 }
 
 Game::~Game()
 {
 	delete m_window;
-	delete m_testBall;
-	delete m_testPlatform;
-	delete m_physics;
+	delete m_level;
 }
 
 /*!
@@ -37,10 +37,17 @@ Game::~Game()
 */
 void Game::Start()
 {
-	m_physics = new Physics(b2Vec2(0.0f, 10.0f), 7, 5); //Setup the Physics object, creating the b2World.
+	std::vector<b2Vec2> entryPoints;
+	entryPoints.push_back(b2Vec2(-2.0f, 0.0f));
+	entryPoints.push_back(b2Vec2(2.0f, 0.0f));
 
-	m_testBall = new Ball("./resources/Textures/ball.png", b2Vec2(0.0f, -3.0f), 0.1f, m_physics->getWorld());
-	m_testPlatform = new Platform(b2Vec2(0.0f, 0.0f), b2Vec2(4.0f, 0.5f), 4.0f, m_physics->getWorld());
+	std::vector<b2Vec2> goals;
+	goals.push_back(b2Vec2(0.0f, 2.0f));
+	goals.push_back(b2Vec2(-2.0f, 2.0f));
+
+	m_level->m_newLevel(10, 5, entryPoints, goals);
+
+	m_level->m_resume();
 }
 
 /*!
@@ -56,8 +63,7 @@ void Game::Update(float fElapsedTime)
 		m_window->close();
 	}
 
-	m_physics->updateWorld(fElapsedTime); //Calls b2World::Step() with the given elapsedTime.
-	m_testBall->m_update();
+	m_level->m_update(fElapsedTime);
 }
 
 /*!
@@ -66,8 +72,7 @@ void Game::Update(float fElapsedTime)
 */
 void Game::Render()
 {
-	m_window->draw(*m_testBall);
-	m_window->draw(*m_testPlatform);
+	m_window->draw(*m_level);
 }
 
 

@@ -38,6 +38,10 @@ public:
 	*\param otherBody The other body involved in the collision.*/
 	virtual void onCollisionExit(Body * otherBody);
 
+	bool m_bIsSensor = false; //!< Is the b2Body this Body uses a sensor?
+
+	std::string m_tag = ""; //!< The tag that will identify this Body if assigned.
+
 	private:
 		float m_fDensity = 1.0f; //!< The density to be applied to the fixture that m_body uses.
 		float m_fFriction = 0.4f; //!< The friction to be applied to the fixture that m_body uses.
@@ -87,5 +91,7 @@ public:
 		*	\param isSensor Whether this body is a sensor or not.
 		*/
 		void setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius, b2World * world, void * self, bool isSensor);
+
+		void m_setTag(std::string tag);
 };
 

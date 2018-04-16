@@ -153,6 +153,8 @@
     <ClCompile Include="Body.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -162,6 +164,7 @@
     <ClInclude Include="Body.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Platform.h" />
