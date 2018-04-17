@@ -8,11 +8,13 @@
 class Level : public sf::Drawable
 {
 private:
-
 	//Level Attributes
 	bool m_bIsPaused = true; //!< False if no longer in the platform placement phase where balls can fall.
 	int m_iNumberOfBalls; //!< The number of balls that exist within the level.
 	int m_iNumberOfBallsToWin; //!< The number of balls that need to go into a goal to win the level.
+	int m_iGoalsScored = 0;
+
+	float m_fBallDeviationAmt = 0.3f;
 
 	//Objects
 	std::vector<Ball*> m_balls; //!< The balls that will fall when a level is started/resumed.
@@ -21,8 +23,9 @@ private:
 	std::vector<b2Vec2> m_entryPoints; //!< The entry points that the balls will fall from. Evenly distributed if more than 1 point.
 
 	//Temporary Testing Stuff
-	Ball * m_testBall = nullptr;
 	Platform * m_testPlatform = nullptr;
+
+	void levelOver(bool bLevelIsWon);
 
 public:
 	Level(); //!< The default constructor.

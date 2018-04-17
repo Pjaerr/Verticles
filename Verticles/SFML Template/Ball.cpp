@@ -17,6 +17,7 @@ void Ball::onCollisionEnter(Body * otherBody)
 {
 	if (otherBody->m_tag == "Goal")
 	{
+		m_bHasHitGoal = true;
 		circle.setFillColor(sf::Color::Magenta);
 		std::cout << "Ball has touched a goal" << std::endl;
 	}
@@ -65,12 +66,14 @@ void Ball::m_setupSprite(std::string textureFilePath)
 /*! Sets the position and rotation of this object's sprite to that of the body.*/
 void Ball::m_update()
 {
-	m_sprite.setPosition(getPosition().x, getPosition().y);
+	//m_sprite.setPosition(getPosition().x, getPosition().y);
 
-	float angle = -getRotation() * RAD2DEG;
-	m_sprite.setRotation(angle);
+	float angle = getRotation();
+
+	//m_sprite.setRotation(angle);
 
 	circle.setPosition(getPosition().x, getPosition().y);
+
 	circle.setRotation(angle);
 }
 

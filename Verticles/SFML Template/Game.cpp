@@ -16,8 +16,9 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	//The physical world in meters for conversion between SFML coordinates and Box2D coordinates.
 	m_physicalWorldSize = sf::Vector2f(fWidth * 0.01f, fHeight * 0.01f);
 
+
 	//sf::View set at (0,0) with a size of the physical world size.
-	m_view = sf::View(sf::Vector2f(0.0f, 0.0f), m_physicalWorldSize);
+	m_view = sf::View(sf::Vector2f(4.0f, 3.0f), sf::Vector2f(8.0f, 6.0f));
 
 	m_level = new Level();
 
@@ -38,16 +39,14 @@ Game::~Game()
 void Game::Start()
 {
 	std::vector<b2Vec2> entryPoints;
-	entryPoints.push_back(b2Vec2(-2.0f, 0.0f));
 	entryPoints.push_back(b2Vec2(2.0f, 0.0f));
+	entryPoints.push_back(b2Vec2(6.0f, 0.0f));
 
 	std::vector<b2Vec2> goals;
-	goals.push_back(b2Vec2(0.0f, 2.0f));
-	goals.push_back(b2Vec2(-2.0f, 2.0f));
+	goals.push_back(b2Vec2(2.0f, 4.0f));
+	goals.push_back(b2Vec2(6.0f, 4.0f));
 
-	m_level->m_newLevel(10, 5, entryPoints, goals);
-
-	m_level->m_resume();
+	m_level->m_newLevel(30, 10, entryPoints, goals);
 }
 
 /*!
@@ -57,6 +56,10 @@ void Game::Start()
 */
 void Game::Update(float fElapsedTime)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		m_level->m_resume();
+	}
 	/*Temporary way to exit window.*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{

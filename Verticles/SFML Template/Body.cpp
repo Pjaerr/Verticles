@@ -52,7 +52,6 @@ void Body::setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position,
 
 	bodyDef.angle = fRotation * DEG2RAD; //Set body rotation to fRotation in radians.
 	
-
 	m_body = world->CreateBody(&bodyDef);
 	m_body->SetUserData(self);
 
@@ -79,9 +78,9 @@ void Body::setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position,
 /*! Sets up this body as a box.*/
 void Body::setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, float fRotation, b2World * world, void * self, bool isSensor)
 {
-	b2PolygonShape boxShape;
+	b2PolygonShape boxShape = b2PolygonShape();
 	boxShape.SetAsBox(size.x * 0.5f, size.y * 0.5f);
-	boxShape.m_radius = 0.0f;
+	boxShape.m_radius = 0.05f;
 	m_size = size;
 
 	setupBody(bodyType, &boxShape, position, fRotation, world, self, isSensor);
@@ -90,7 +89,7 @@ void Body::setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, flo
 /*! Sets up this body as a circle.*/
 void Body::setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius, b2World * world, void * self, bool isSensor)
 {
-	b2CircleShape circleShape;
+	b2CircleShape circleShape = b2CircleShape();
 	circleShape.m_radius = fRadius;
 	m_fRadius = fRadius;
 	

@@ -33,6 +33,8 @@ class Ball : public Body, public sf::Drawable
 		*/
 		Ball(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * world);
 
+		bool m_bHasHitGoal = false;
+
 		
 
 		/*! \brief Sets the position and rotation of this object's sprite to that of the body.*/
