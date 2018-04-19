@@ -3,6 +3,9 @@
 #include "Body.h"
 
 
+/*!\class Goal
+*	\brief The object that acts as a goal within the game world.
+*/
 class Goal : public Body, public sf::Drawable
 {
 private:

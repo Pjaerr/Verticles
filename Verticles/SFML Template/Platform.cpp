@@ -5,7 +5,7 @@ a pointer to this object so that collisions can be managed in here as opposed to
 itself.*/
 Platform::Platform(b2Vec2 pos, b2Vec2 size, float fRotation, b2World * world)
 {
-	setupBodyAsBox(b2_staticBody, pos, size, fRotation, world, this, false);
+	m_setupBodyAsBox(b2_staticBody, pos, size, fRotation, world, this, false);
 	m_setupRect();
 }
 
@@ -15,11 +15,11 @@ Platform::Platform(b2Vec2 pos, b2Vec2 size, float fRotation, b2World * world)
 void Platform::m_setupRect()
 {
 	m_rect = sf::RectangleShape(sf::Vector2f(getSize().x, getSize().y)); //Set to the same size as the static body.
-	m_rect.setPosition(getPosition().x, getPosition().y); //Set to same position as the static body.
+	m_rect.setPosition(m_getPosition().x, m_getPosition().y); //Set to same position as the static body.
 	m_rect.setOrigin(getSize().x * 0.5f, getSize().y * 0.5f); //Set origin to center of the rectangle.
 
 	//Set to the same rotation as the static body.
-	float rot = getRotation() * RAD2DEG;
+	float rot = m_fGetRotation() * RAD2DEG;
 
 	m_rect.setRotation(rot);
 

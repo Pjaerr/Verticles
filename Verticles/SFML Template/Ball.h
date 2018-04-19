@@ -7,6 +7,12 @@
 * dynamic bodies that have a starting position and will fall as per gravity at the start of a level.
 */
 
+/*! \class Ball
+* \brief The class that controls the balls that fall when a level begins.
+
+* These are lightweight dynamic bodies that have a starting position and will 
+* fall as per gravity at the start of a level.
+*/
 class Ball : public Body, public sf::Drawable
 {
 	private:
@@ -33,9 +39,7 @@ class Ball : public Body, public sf::Drawable
 		*/
 		Ball(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * world);
 
-		bool m_bHasHitGoal = false;
-
-		
+		bool m_bHasHitGoal = false; //!< True if the ball has collided with a goal. Also acts as its safe to delete check.
 
 		/*! \brief Sets the position and rotation of this object's sprite to that of the body.*/
 		void m_update();

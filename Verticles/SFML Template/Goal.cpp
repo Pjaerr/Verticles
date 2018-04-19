@@ -6,7 +6,7 @@ itself. It also sets this Body's tag to be "Goal" so that this specific object c
 a collision occurs.*/
 Goal::Goal(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * world)
 {
-	setupBodyAsCircle(b2_staticBody, pos, fRadius, world, this, true); //Setup the body as a sensor.
+	m_setupBodyAsCircle(b2_staticBody, pos, fRadius, world, this, true); //Setup the body as a sensor.
 
 	m_setTag("Goal");
 
@@ -27,17 +27,17 @@ void Goal::m_setupSprite(std::string textureFilePath)
 
 	m_sprite.setTexture(m_texture);
 
-	m_sprite.setPosition(getPosition().x, getPosition().y); //Set to same position as the dynamic body.
-	m_sprite.setScale(getRadius(), getRadius()); //Set to the same radius as the dynamic body.
-	m_sprite.setOrigin(getRadius() * 0.5f, getRadius() * 0.5f); //Set origin to center of the sprite.
+	m_sprite.setPosition(m_getPosition().x, m_getPosition().y); //Set to same position as the dynamic body.
+	m_sprite.setScale(m_fGetRadius(), m_fGetRadius()); //Set to the same radius as the dynamic body.
+	m_sprite.setOrigin(m_fGetRadius() * 0.5f, m_fGetRadius() * 0.5f); //Set origin to center of the sprite.
 
 																//Set to the same rotation as the dynamic body.
-	float rot = -getRotation() * RAD2DEG;
+	float rot = -m_fGetRotation() * RAD2DEG;
 	m_sprite.setRotation(rot);
 
-	circle = sf::CircleShape(getRadius());
-	circle.setPosition(getPosition().x, getPosition().y);
-	circle.setOrigin(getRadius() * 0.5f, getRadius() * 0.5f);
+	circle = sf::CircleShape(m_fGetRadius());
+	circle.setPosition(m_getPosition().x, m_getPosition().y);
+	circle.setOrigin(m_fGetRadius() * 0.5f, m_fGetRadius() * 0.5f);
 	circle.setFillColor(sf::Color::Red);
 }
 

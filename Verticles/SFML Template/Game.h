@@ -11,6 +11,15 @@
 * out into other objects relevant to the game itself.
 */
 
+
+/*!\class Game
+*	\brief The basis for the 'program flow'.
+
+*	The class is intended to be reusable as it only handles the window and program
+*	flow such as updating and rendering the game. The Game class doesn't directly manage
+*	any part of the game itself, it simply holds the functionality that gets initiated via the object
+*	that it is a part of. 
+*/
 class Game
 {
 	public:
@@ -34,7 +43,6 @@ class Game
 		sf::View m_view; //!< Responsible for scaling to any aspect ratio and mapping box2D coordinates to sfml coordinates.
 		int m_iWindowWidth;	//!< The width of the window.
 		int m_iWindowHeight; //!< The height of the window.
-		sf::Vector2f m_physicalWorldSize; //!< The size of the world in meters. 800x600 resolution => 8x6 meters
 
 		/*! \brief The Update function gets called every frame and holds the elapsed time since it was last called.*/
 		void Update(float fElapsedTime);

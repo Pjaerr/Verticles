@@ -13,17 +13,23 @@
 #define DEG2RAD 0.017453f; //!< To convert degrees to radians.
 #define RAD2DEG 57.29577f; //!< To convert radians to degrees.
 
+/*! \class Body
+*	\brief The class that interfaces with Box2D and acts as a 'container' for objects in the physical game world.
+*
+* This class should be inherited by objects which require physics, passing in their b2BodyType
+* as a parameter on setup.
+*/
 class Body
 {
 public:
 	/*! \brief Returns the position of the protected b2Body.*/
-	b2Vec2 getPosition();
+	b2Vec2 m_getPosition();
 
 	/*! \brief Returns the rotation of the protected b2Body.*/
-	float getRotation();
+	float m_fGetRotation();
 
 	/*! \brief Returns the radius set when the body was created.*/
-	float getRadius();
+	float m_fGetRadius();
 
 	/*! \brief Returns the size set when the body was created.*/
 	b2Vec2 getSize();
@@ -61,7 +67,7 @@ public:
 		*	\param world The b2World that this body should work within.
 		*	\param self A pointer to the class that this body is created on.
 		*/
-		void setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position, float fRotation, b2World * world, void * self, bool isSensor);
+		void m_setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 position, float fRotation, b2World * world, void * self, bool isSensor);
 
 	protected:
 		/*! \brief Sets the density, friction and restitution of this body.
@@ -69,7 +75,7 @@ public:
 		*	\param fFriction The friction of this body.
 		*	\param fRestitution The restitution of this body.
 		*/
-		void setAttributes(float fDensity, float fFriction, float fRestitution);
+		void m_setAttributes(float fDensity, float fFriction, float fRestitution);
 
 		/*! \brief Sets up this body as a box.
 		*	\param bodyType b2BodyType enum referring to the type of this body.
@@ -80,7 +86,7 @@ public:
 		*	\param self A pointer to the class that this body is created on.
 		*	\param isSensor Whether this body is a sensor or not.
 		*/
-		void setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, float fRotation, b2World * world, void * self, bool isSensor);
+		void m_setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, float fRotation, b2World * world, void * self, bool isSensor);
 
 		/*! \brief Sets up this body as a circle.
 		*	\param bodyType b2BodyType enum referring to the type of this body.
@@ -90,7 +96,7 @@ public:
 		*	\param self A pointer to the class that this body is created on.
 		*	\param isSensor Whether this body is a sensor or not.
 		*/
-		void setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius, b2World * world, void * self, bool isSensor);
+		void m_setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius, b2World * world, void * self, bool isSensor);
 
 		void m_setTag(std::string tag);
 };

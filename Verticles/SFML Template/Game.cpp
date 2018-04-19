@@ -13,14 +13,13 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	m_iWindowWidth = fWidth;
 	m_iWindowHeight = fHeight;
 
-	//The physical world in meters for conversion between SFML coordinates and Box2D coordinates.
-	m_physicalWorldSize = sf::Vector2f(fWidth * 0.01f, fHeight * 0.01f);
+	b2Vec2 worldSize = b2Vec2(fWidth * 0.01f, fHeight * 0.01f);
 
 
 	//sf::View set at (0,0) with a size of the physical world size.
-	m_view = sf::View(sf::Vector2f(4.0f, 3.0f), sf::Vector2f(8.0f, 6.0f));
+	m_view = sf::View(sf::Vector2f(4.0f, 3.0f), sf::Vector2f(worldSize.x, worldSize.y));
 
-	m_level = new Level();
+	m_level = new Level(worldSize);
 
 	m_window->setView(m_view);
 }
@@ -56,10 +55,21 @@ void Game::Start()
 */
 void Game::Update(float fElapsedTime)
 {
+	/*Temporary way to resume/pause the game.*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		m_level->m_resume();
 	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+	{
+		m_level->m_pause();
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	{
+		m_level->m_intiatePlatformPlacement();
+	}
+
 	/*Temporary way to exit window.*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{

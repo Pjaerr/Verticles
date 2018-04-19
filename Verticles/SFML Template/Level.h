@@ -5,11 +5,19 @@
 #include "Goal.h"
 #include "Physics.h"
 
+/*!\class Level
+*	\brief The class responsible for creating a 'scene' within the game.
+*
+*	Creates a level or 'scene' within a game, contains functionality for placing platforms
+*	as well as resuming or pausing the game as well as keeping track of the score.
+*/
 class Level : public sf::Drawable
 {
 private:
 	//Level Attributes
 	bool m_bIsPaused = true; //!< False if no longer in the platform placement phase where balls can fall.
+	bool m_bIsPlacingPlatform = false; //!< True if a platform is currently being placed.
+	bool m_bLevelHasStarted = false; //!< True once m_resume() has been called once. (stops platform placement)
 	int m_iNumberOfBalls; //!< The number of balls that exist within the level.
 	int m_iNumberOfBallsToWin; //!< The number of balls that need to go into a goal to win the level.
 	int m_iGoalsScored = 0;
@@ -25,10 +33,15 @@ private:
 	//Temporary Testing Stuff
 	Platform * m_testPlatform = nullptr;
 
-	void levelOver(bool bLevelIsWon);
+	void m_levelOver(bool bLevelIsWon);
+
+
+	sf::RectangleShape m_tempPlatform; //!< The temporary platform that shows where the actual platform will be placed.
+
+	void m_platformPlacement();
 
 public:
-	Level(); //!< The default constructor.
+	Level(b2Vec2 worldSize); //!< The default constructor.
 	~Level(); //!< The deconstructor, deletes pointers that have been allocated via the new keyword.
 
 	Physics * m_physics = nullptr; //!< The Physics object that keeps track of Box2D and updates the b2World* being used.
@@ -54,4 +67,7 @@ public:
 
 	/*! \brief Sets m_bIsPaused to true.*/
 	void m_pause();
+
+	/*! \brief Starts the platform placement.*/
+	void m_intiatePlatformPlacement();
 };
