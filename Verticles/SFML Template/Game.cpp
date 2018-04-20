@@ -37,15 +37,10 @@ Game::~Game()
 */
 void Game::Start()
 {
-	std::vector<b2Vec2> entryPoints;
-	entryPoints.push_back(b2Vec2(2.0f, 0.0f));
-	entryPoints.push_back(b2Vec2(6.0f, 0.0f));
+	m_level->m_addLevel("./levels/level1.txt", "level1");
+	m_level->m_addLevel("./levels/level2.txt", "level2");
 
-	std::vector<b2Vec2> goals;
-	goals.push_back(b2Vec2(2.0f, 4.0f));
-	goals.push_back(b2Vec2(6.0f, 4.0f));
-
-	m_level->m_newLevel(30, 10, entryPoints, goals);
+	m_level->m_startLevel("level1");
 }
 
 /*!

@@ -30,6 +30,8 @@ class Platform : public Body, public sf::Drawable
 		*/
 		Platform(b2Vec2 pos, b2Vec2 size, float fRotation, b2World * world);
 
+		~Platform();
+
 		/*! \brief The virtual draw function taken from sf::Drawable.*/
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

@@ -5,6 +5,9 @@
 #include "Goal.h"
 #include "Physics.h"
 
+#include <map> //For texture management.
+
+
 /*!\class Level
 *	\brief The class responsible for creating a 'scene' within the game.
 *
@@ -18,9 +21,12 @@ private:
 	bool m_bIsPaused = true; //!< False if no longer in the platform placement phase where balls can fall.
 	bool m_bIsPlacingPlatform = false; //!< True if a platform is currently being placed.
 	bool m_bLevelHasStarted = false; //!< True once m_resume() has been called once. (stops platform placement)
+
 	int m_iNumberOfBalls; //!< The number of balls that exist within the level.
 	int m_iNumberOfBallsToWin; //!< The number of balls that need to go into a goal to win the level.
 	int m_iGoalsScored = 0;
+	int m_iPlatformsPlaced = 0;
+	int m_iPlatformLimit = 2;
 
 	float m_fBallDeviationAmt = 0.3f;
 
@@ -30,29 +36,36 @@ private:
 	std::vector<Goal *> m_goals; //!< The goals that the balls must fall into in order to score points.
 	std::vector<b2Vec2> m_entryPoints; //!< The entry points that the balls will fall from. Evenly distributed if more than 1 point.
 
-	//Temporary Testing Stuff
-	Platform * m_testPlatform = nullptr;
-
-	void m_levelOver(bool bLevelIsWon);
-
-
 	sf::RectangleShape m_tempPlatform; //!< The temporary platform that shows where the actual platform will be placed.
 
+	void m_levelOver(bool bLevelIsWon);
 	void m_platformPlacement();
+
+	/*! \brief Creates a new level from the given filepath.
+	*	\param filePath A string referencing a filepath from which to load the level.
+	*/
+	void m_newLevel(const char * filePath);
+
+	std::map<std::string, std::string> m_textures;
+
+	std::map<std::string, std::string> m_levels;
+	std::string m_currentLevel;
 
 public:
 	Level(b2Vec2 worldSize); //!< The default constructor.
 	~Level(); //!< The deconstructor, deletes pointers that have been allocated via the new keyword.
 
+	void m_clearData();
+
+	void m_resetLevel();
+
+	void m_createTexture(std::string filePath, std::string name);
+
 	Physics * m_physics = nullptr; //!< The Physics object that keeps track of Box2D and updates the b2World* being used.
 
-	/*! \brief Creates a new, frozen, level using the given parameters.
-	*	\param iNumberOfBalls The number of balls that this level has.
-	*	\param iNumberOfBallsToWin The minimum number of balls that must fall into a goal in order to win.
-	*	\param entryPoints The position[s] from which the balls will fall when a level is started.
-	*	\param goals The positions that the balls must come into contact with in order to score a point.
-	*/
-	void m_newLevel(int iNumberOfBalls, int iNumberOfBallsToWin, std::vector<b2Vec2> entryPoints, std::vector<b2Vec2> goals);
+
+	void m_addLevel(std::string filePath, std::string name);
+	void m_startLevel(std::string name);
 
 	/*! \brief The virtual draw function taken from sf::Drawable.*/
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -9,6 +9,11 @@ Platform::Platform(b2Vec2 pos, b2Vec2 size, float fRotation, b2World * world)
 	m_setupRect();
 }
 
+Platform::~Platform()
+{
+	
+}
+
 /*! Initialises the sprite as per the texture file path and this object's static body's
 * position, rotation and radius.
 */

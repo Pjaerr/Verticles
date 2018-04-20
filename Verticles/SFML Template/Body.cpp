@@ -1,5 +1,10 @@
 #include "Body.h"
 
+void Body::m_destroySelf()
+{
+	m_body->GetWorld()->DestroyBody(m_body);
+}
+
 b2Vec2 Body::m_getPosition()
 {
 	return b2Vec2(m_body->GetPosition().x, m_body->GetPosition().y);

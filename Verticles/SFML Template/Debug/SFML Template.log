@@ -1,13 +1,11 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SFML Template.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Level.cpp
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(60): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(64): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(79): warning C4018: '<': signed/unsigned mismatch
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(125): warning C4018: '<': signed/unsigned mismatch
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(130): warning C4018: '<': signed/unsigned mismatch
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(135): warning C4018: '<': signed/unsigned mismatch
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(142): warning C4018: '<': signed/unsigned mismatch
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(244): warning C4018: '<': signed/unsigned mismatch
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(254): warning C4018: '<': signed/unsigned mismatch
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(193): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(197): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(255): warning C4018: '<': signed/unsigned mismatch
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(260): warning C4018: '<': signed/unsigned mismatch
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(265): warning C4018: '<': signed/unsigned mismatch
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(270): warning C4018: '<': signed/unsigned mismatch
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\level.cpp(360): warning C4018: '<': signed/unsigned mismatch
   SFML Template.vcxproj -> C:\Users\Pjaer\Desktop\Projects\WIP\University\Verticles\Verticles\Debug\Verticles.exe
   SFML Template.vcxproj -> C:\Users\Pjaer\Desktop\Projects\WIP\University\Verticles\Verticles\Debug\Verticles.pdb (Full PDB)

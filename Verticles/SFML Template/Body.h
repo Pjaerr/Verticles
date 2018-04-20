@@ -22,6 +22,8 @@
 class Body
 {
 public:
+	void m_destroySelf();
+
 	/*! \brief Returns the position of the protected b2Body.*/
 	b2Vec2 m_getPosition();
 
@@ -51,7 +53,7 @@ public:
 	private:
 		float m_fDensity = 1.0f; //!< The density to be applied to the fixture that m_body uses.
 		float m_fFriction = 0.4f; //!< The friction to be applied to the fixture that m_body uses.
-		float m_fRestitution = 0.6f; //!< The restitution to be applied to the fixture that m_body uses.
+		float m_fRestitution = 0.4f; //!< The restitution to be applied to the fixture that m_body uses.
 
 		float m_fRadius = 0.0f; //!< The radius to set this body to (if a circle shape).
 
