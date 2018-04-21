@@ -24,37 +24,31 @@ void Goal::m_setupSprite(std::string textureFilePath)
 		std::cout << "Cannot read file at " << textureFilePath << std::endl;
 		return;
 	}
+	m_circle = sf::CircleShape(m_fGetRadius());
 
-	m_sprite.setTexture(m_texture);
+	m_circle.setOrigin(m_fGetRadius(), m_fGetRadius());
 
-	m_sprite.setPosition(m_getPosition().x, m_getPosition().y); //Set to same position as the dynamic body.
-	m_sprite.setScale(m_fGetRadius(), m_fGetRadius()); //Set to the same radius as the dynamic body.
-	m_sprite.setOrigin(m_fGetRadius() * 0.5f, m_fGetRadius() * 0.5f); //Set origin to center of the sprite.
+	m_circle.setPosition(m_getPosition().x, m_getPosition().y);
+	
+	m_circle.setRotation(m_fGetRotation());
 
-																//Set to the same rotation as the dynamic body.
-	float rot = -m_fGetRotation() * RAD2DEG;
-	m_sprite.setRotation(rot);
-
-	circle = sf::CircleShape(m_fGetRadius());
-	circle.setPosition(m_getPosition().x, m_getPosition().y);
-	circle.setOrigin(m_fGetRadius() * 0.5f, m_fGetRadius() * 0.5f);
-	circle.setFillColor(sf::Color::Red);
+	m_circle.setTexture(&m_texture);
 }
 
 /*! The virtual draw function taken from sf::Drawable.*/
 void Goal::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(circle);
+	target.draw(m_circle);
 }
 
 /*! Functionality overridden from Body::onCollisionEnter(Body * otherBody)*/
 void Goal::onCollisionEnter(Body * otherBody)
 {
-	circle.setFillColor(sf::Color::Blue);
+	
 }
 
 /*! Functionality overridden from Body::onCollisionExit(Body * otherBody)*/
 void Goal::onCollisionExit(Body * otherBody)
 {
-	circle.setFillColor(sf::Color::Red);
+	
 }

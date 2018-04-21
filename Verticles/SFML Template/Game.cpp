@@ -13,7 +13,7 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	m_iWindowWidth = fWidth;
 	m_iWindowHeight = fHeight;
 
-	b2Vec2 worldSize = b2Vec2(fWidth * 0.01f, fHeight * 0.01f);
+	b2Vec2 worldSize = b2Vec2(8, 6);
 
 
 	//sf::View set at (0,0) with a size of the physical world size.
@@ -22,12 +22,27 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	m_level = new Level(worldSize);
 
 	m_window->setView(m_view);
+
+	m_backgroundTexture = new sf::Texture();
+
+	if (m_backgroundTexture->loadFromFile("./resources/Textures/HealthyWater.jpg"))
+	{
+		m_backgroundShape = sf::RectangleShape(sf::Vector2f(worldSize.x, worldSize.y));
+		m_backgroundShape.setOrigin(m_backgroundShape.getGlobalBounds().width / 2, m_backgroundShape.getGlobalBounds().height / 2);
+		m_backgroundShape.setPosition(worldSize.x / 2, worldSize.y / 2);
+		m_backgroundShape.setTexture(m_backgroundTexture);
+	}
+	else
+	{
+		std::cout << "Failed to load background texture." << std::endl;
+	}
 }
 
 Game::~Game()
 {
 	delete m_window;
 	delete m_level;
+	delete m_backgroundTexture;
 }
 
 /*!
@@ -37,8 +52,13 @@ Game::~Game()
 */
 void Game::Start()
 {
-	m_level->m_addLevel("./levels/level1.txt", "level1");
-	m_level->m_addLevel("./levels/level2.txt", "level2");
+	m_level->m_addLevel("./resources/Levels/level6.txt", "level1");
+	m_level->m_addLevel("./resources/Levels/level2.txt", "level2");
+	m_level->m_addLevel("./resources/Levels/level3.txt", "level3");
+	m_level->m_addLevel("./resources/Levels/level4.txt", "level3");
+	m_level->m_addLevel("./resources/Levels/level5.txt", "level5");
+	m_level->m_addLevel("./resources/Levels/level6.txt", "level6");
+	m_level->m_addLevel("./resources/Levels/level7.txt", "level7");
 
 	m_level->m_startLevel("level1");
 }
@@ -80,6 +100,7 @@ void Game::Update(float fElapsedTime)
 */
 void Game::Render()
 {
+	m_window->draw(m_backgroundShape);
 	m_window->draw(*m_level);
 }
 

@@ -24,11 +24,9 @@ void Platform::m_setupRect()
 	m_rect.setOrigin(getSize().x * 0.5f, getSize().y * 0.5f); //Set origin to center of the rectangle.
 
 	//Set to the same rotation as the static body.
-	float rot = m_fGetRotation() * RAD2DEG;
+	m_rect.setRotation(m_fGetRotation());
 
-	m_rect.setRotation(rot);
-
-	m_rect.setFillColor(sf::Color::Green);
+	m_rect.setFillColor(sf::Color::Color(75, 75, 75, 255));
 }
 
 /*! The virtual draw function taken from sf::Drawable.*/

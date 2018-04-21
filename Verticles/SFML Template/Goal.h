@@ -9,11 +9,9 @@
 class Goal : public Body, public sf::Drawable
 {
 private:
-	sf::Sprite m_sprite; //!< The sprite that is drawn when this object is passed into window.draw()
 	sf::Texture m_texture; //!< The texture applied to the sprite.
 
-	//Temporary Testing Stuff
-	sf::CircleShape circle;
+	sf::CircleShape m_circle;
 
 	/*! \brief Initialises the sprite as per the texture file path and this object's dynamic body.
 	*	\param textureFilePath The path to the texture this object's sprite should use.

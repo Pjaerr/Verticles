@@ -44,6 +44,9 @@ class Game
 		int m_iWindowWidth;	//!< The width of the window.
 		int m_iWindowHeight; //!< The height of the window.
 
+		sf::RectangleShape m_backgroundShape;
+		sf::Texture * m_backgroundTexture;
+
 		/*! \brief The Update function gets called every frame and holds the elapsed time since it was last called.*/
 		void Update(float fElapsedTime);
 

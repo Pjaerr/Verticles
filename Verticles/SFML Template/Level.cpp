@@ -5,27 +5,14 @@ Level::Level(b2Vec2 worldSize)
 {
 	m_physics = new Physics(b2Vec2(0.0f, 2.5f), 15, 15, worldSize); //Setup the Physics object, creating the b2World.
 
-	m_createTexture("./resources/Textures/redBlock.png", "goal");
+	m_createTexture("./resources/Textures/target.png", "goal");
 	m_createTexture("./resources/Textures/ball.png", "ball");
 }
 
 /*! The deconstructor, deletes pointers to the balls, platforms and goals.*/
 Level::~Level()
 {
-	for (int i = m_balls.size() - 1; i > 0; i--)
-	{
-		delete m_balls.at(i);
-	}
-
-	for (int i = m_platforms.size() - 1; i > 0; i--)
-	{
-		delete m_platforms.at(i);
-	}
-
-	for (int i = m_goals.size() - 1; i > 0; i--)
-	{
-		delete m_goals.at(i);
-	}
+	delete m_physics;
 }
 
 void Level::m_clearData()
@@ -33,8 +20,8 @@ void Level::m_clearData()
 	for (int i = m_balls.size() - 1; i >= 0; i--)
 	{
 		m_balls.at(i)->m_destroySelf();
+
 		m_balls.at(i) = nullptr;
-		delete m_balls.at(i);
 	}
 
 	m_balls.clear();
@@ -42,8 +29,8 @@ void Level::m_clearData()
 	for (int i = m_goals.size() - 1; i >= 0; i--)
 	{
 		m_goals.at(i)->m_destroySelf();
+
 		m_goals.at(i) = nullptr;
-		delete m_goals.at(i);
 	}
 
 	m_goals.clear();
@@ -51,8 +38,8 @@ void Level::m_clearData()
 	for (int i = m_platforms.size() - 1; i >= 0; i--)
 	{
 		m_platforms.at(i)->m_destroySelf();
+
 		m_platforms.at(i) = nullptr;
-		delete m_platforms.at(i);
 	}
 
 	m_platforms.clear();
@@ -96,8 +83,9 @@ void Level::m_startLevel(std::string name)
 	--------------
 	balls 50 // The number of balls in the level.
 	score 20 // The number of balls needed to go into a goal to win.
+	limit 2 // The maximum number of platforms allowed to be placed.
 
-	g 2/4 0.5 //Creates a goal at a given position 2/4 (x/y) and with a radius 0.5
+	g 2/4 0.5 // Creates a goal at a given position 2/4 (x/y) and with a radius 0.5
 
 	p 2/3 6/0.5 14 // Creates a platform at a given 2/3 (x/y) with a given 6/0.5 (width/height) rotated at angle 14 (degrees)
 
@@ -161,7 +149,7 @@ void Level::m_newLevel(const char * filePath)
 
 			int n = fscanf_s(file, "%f/%f %f\n", &pos.x, &pos.y, &radius);
 
-			m_goals.push_back(new Goal(m_textures.at("goal"), pos, radius, m_physics->m_getWorld()));
+			m_goals.push_back(std::unique_ptr<Goal>(new Goal(m_textures.at("goal"), pos, radius, m_physics->m_getWorld())));
 		}
 		else if (strcmp(line, "p") == 0)
 		{
@@ -171,7 +159,7 @@ void Level::m_newLevel(const char * filePath)
 
 			int n = fscanf_s(file, "%f/%f %f/%f %f\n", &pos.x, &pos.y, &size.x, &size.y, &rotation);
 
-			m_platforms.push_back(new Platform(pos, size, rotation, m_physics->m_getWorld()));
+			m_platforms.push_back(std::unique_ptr<Platform>(new Platform(pos, size, rotation, m_physics->m_getWorld())));
 		}
 	}
 
@@ -181,9 +169,6 @@ void Level::m_newLevel(const char * filePath)
 		/*Evenly distribute the balls between all of the available entry points by
 		checking if we have looped through a section of the evenly split number
 		of balls.*/
-
-		std::cout << "i: "<< i << std::endl;
-		std::cout << "Not i: " << (int)((m_iNumberOfBalls / m_entryPoints.size() * iEntryPointIndex)) << std::endl;
 
 		if (i == (int)((m_iNumberOfBalls / m_entryPoints.size() * iEntryPointIndex)))
 		{
@@ -201,15 +186,18 @@ void Level::m_newLevel(const char * filePath)
 		b2Vec2 pos = b2Vec2(m_entryPoints.at(iEntryPointIndex - 1).x + xOffset, m_entryPoints.at(iEntryPointIndex - 1).y + yOffset);
 
 		//Create a new Ball object and push it to the collection of balls at the given position in m_entryPoints.
-		m_balls.push_back(new Ball(m_textures.at("ball"), pos, 0.1f, m_physics->m_getWorld()));
+		m_balls.push_back(std::unique_ptr<Ball>(new Ball(m_textures.at("ball"), pos, 0.1f, m_physics->m_getWorld())));
 	}
 }
 
 /*! Resumes the game by setting m_bIsPaused to false.*/
 void Level::m_resume()
 {
-	m_bLevelHasStarted = true;
-	m_bIsPaused = false;
+	if (!m_bIsPlacingPlatform)
+	{
+		m_bLevelHasStarted = true;
+		m_bIsPaused = false;
+	}
 }
 
 /*! Pauses the game by setting m_bIsPaused to true.*/
@@ -230,9 +218,7 @@ void Level::m_intiatePlatformPlacement()
 
 		m_tempPlatform.setPosition(sf::Vector2f(m_physics->m_getWorldSize().x / 2, m_physics->m_getWorldSize().y / 2));
 
-		m_tempPlatform.setFillColor(sf::Color::Transparent);
-		m_tempPlatform.setOutlineThickness(0.1f);
-		m_tempPlatform.setOutlineColor(sf::Color::Blue);
+		m_tempPlatform.setFillColor(sf::Color::Green);
 
 		m_iPlatformsPlaced++;
 	}
@@ -261,6 +247,11 @@ void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(*m_platforms.at(i));
 	}
+	if (!m_bLevelHasStarted && m_bIsPlacingPlatform)
+	{
+		target.draw(m_tempPlatform);
+	}
+
 
 	for (int i = 0; i < m_goals.size(); i++)
 	{
@@ -274,10 +265,7 @@ void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(rekt);
 	}
 
-	if (!m_bLevelHasStarted && m_bIsPlacingPlatform)
-	{
-		target.draw(m_tempPlatform);
-	}
+	
 }
 
 void Level::m_platformPlacement()
@@ -309,7 +297,7 @@ void Level::m_platformPlacement()
 		m_tempPlatform.rotate(-1.0f);
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
 		if (m_tempPlatform.getScale().x < m_physics->m_getWorldSize().x * 0.2f)
 		{
@@ -317,7 +305,7 @@ void Level::m_platformPlacement()
 		}
 
 	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Dash))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
 		if (m_tempPlatform.getScale().x > 0.3f)
 		{
@@ -325,13 +313,13 @@ void Level::m_platformPlacement()
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
 	{
 		m_bIsPlacingPlatform = false;
 
-		m_platforms.push_back(new Platform(b2Vec2(m_tempPlatform.getPosition().x, m_tempPlatform.getPosition().y),
+		m_platforms.push_back(std::unique_ptr<Platform>(new Platform(b2Vec2(m_tempPlatform.getPosition().x, m_tempPlatform.getPosition().y),
 			b2Vec2(m_tempPlatform.getSize().x * m_tempPlatform.getScale().x, m_tempPlatform.getSize().y),
-			m_tempPlatform.getRotation(), m_physics->m_getWorld()));
+			m_tempPlatform.getRotation(), m_physics->m_getWorld())));
 	}
 }
 
@@ -383,24 +371,23 @@ void Level::m_update(float fElapsedTime)
 		{
 			if (m_balls.at(i)->m_bHasHitGoal)
 			{
-				//Delete the ball that is safe to delete here.
-				//Increment the number of goals scored here. (potentially works, only tested shortly).
 				m_balls.at(i)->m_destroySelf();
+
 				m_balls.at(i) = nullptr;
-				delete m_balls.at(i);
+
 				m_balls.erase(m_balls.begin() + i);
+
 				m_iGoalsScored++;
 			}
 			else if (m_balls.at(i)->m_getPosition().y > 8.0f)
 			{
 				m_balls.at(i)->m_destroySelf();
+
 				m_balls.at(i) = nullptr;
-				delete m_balls.at(i);
+
 				m_balls.erase(m_balls.begin() + i);
 			}
 		}
-
-		std::cout << "Goals Scored: " << m_iGoalsScored << std::endl;
 	}
 }
 

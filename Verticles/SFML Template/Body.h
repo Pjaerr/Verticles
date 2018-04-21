@@ -22,6 +22,7 @@
 class Body
 {
 public:
+	/*! \brief Destroys the b2Body associated with this object.*/
 	void m_destroySelf();
 
 	/*! \brief Returns the position of the protected b2Body.*/

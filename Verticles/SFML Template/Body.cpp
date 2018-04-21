@@ -1,5 +1,6 @@
 #include "Body.h"
 
+/*! Destroys the b2Body associated with this object.*/
 void Body::m_destroySelf()
 {
 	m_body->GetWorld()->DestroyBody(m_body);
@@ -12,7 +13,7 @@ b2Vec2 Body::m_getPosition()
 
 float Body::m_fGetRotation()
 {
-	return m_body->GetAngle();
+	return m_body->GetAngle() * RAD2DEG;
 }
 
 float Body::m_fGetRadius()
@@ -76,16 +77,14 @@ void Body::m_setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 positio
 	}
 
 	m_body->CreateFixture(&fixtureDef);
-
-	
 }
 
 /*! Sets up this body as a box.*/
 void Body::m_setupBodyAsBox(b2BodyType bodyType, b2Vec2 position, b2Vec2 size, float fRotation, b2World * world, void * self, bool isSensor)
 {
 	b2PolygonShape boxShape = b2PolygonShape();
-	boxShape.SetAsBox(size.x * 0.5f, size.y * 0.5f);
-	boxShape.m_radius = 0.05f;
+	boxShape.SetAsBox(size.x * 0.5f - b2_polygonRadius, size.y * 0.5f - b2_polygonRadius);
+
 	m_size = size;
 
 	m_setupBody(bodyType, &boxShape, position, fRotation, world, self, isSensor);

@@ -3,7 +3,7 @@
 
 int main()
 {
-	Game game = Game(800, 600, "Verticles");
+	Game game = Game(1024, 768, "Verticles");
 
 	game.m_run();
 	return 0;
