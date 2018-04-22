@@ -5,14 +5,19 @@ Level::Level(b2Vec2 worldSize)
 {
 	m_physics = new Physics(b2Vec2(0.0f, 2.5f), 15, 15, worldSize); //Setup the Physics object, creating the b2World.
 
-	m_createTexture("./resources/Textures/target.png", "goal");
-	m_createTexture("./resources/Textures/ball.png", "ball");
+	m_dataManager.m_setFont("./resources/fonts/Timeless.ttf");
+
+	m_dataManager.m_addTexture("goal", "./resources/Textures/target.png");
+	m_dataManager.m_addTexture("ball", "./resources/Textures/ball.png");
+
+	m_hud = new HUD(m_dataManager.m_getFont());
 }
 
 /*! The deconstructor, deletes pointers to the balls, platforms and goals.*/
 Level::~Level()
 {
 	delete m_physics;
+	delete m_hud;
 }
 
 void Level::m_clearData()
@@ -149,7 +154,7 @@ void Level::m_newLevel(const char * filePath)
 
 			int n = fscanf_s(file, "%f/%f %f\n", &pos.x, &pos.y, &radius);
 
-			m_goals.push_back(std::unique_ptr<Goal>(new Goal(m_textures.at("goal"), pos, radius, m_physics->m_getWorld())));
+			m_goals.push_back(std::unique_ptr<Goal>(new Goal(m_dataManager.m_getTexture("goal"), pos, radius, m_physics->m_getWorld())));
 		}
 		else if (strcmp(line, "p") == 0)
 		{
@@ -186,7 +191,7 @@ void Level::m_newLevel(const char * filePath)
 		b2Vec2 pos = b2Vec2(m_entryPoints.at(iEntryPointIndex - 1).x + xOffset, m_entryPoints.at(iEntryPointIndex - 1).y + yOffset);
 
 		//Create a new Ball object and push it to the collection of balls at the given position in m_entryPoints.
-		m_balls.push_back(std::unique_ptr<Ball>(new Ball(m_textures.at("ball"), pos, 0.1f, m_physics->m_getWorld())));
+		m_balls.push_back(std::unique_ptr<Ball>(new Ball(m_dataManager.m_getTexture("ball"), pos, 0.1f, m_physics->m_getWorld())));
 	}
 }
 
@@ -230,11 +235,6 @@ void Level::m_intiatePlatformPlacement()
 	
 }
 
-void Level::m_createTexture(std::string filePath, std::string name)
-{
-	m_textures.insert(std::pair<std::string, std::string>(name, filePath));
-}
-
 /*! The sf::Drawable virtual draw function. Draws all of the balls, platforms and goals this level uses.*/
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -265,6 +265,7 @@ void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(rekt);
 	}
 
+	target.draw(*m_hud);
 	
 }
 
@@ -329,6 +330,8 @@ void Level::m_platformPlacement()
 */
 void Level::m_update(float fElapsedTime)
 {
+	m_hud->m_update(std::to_string(m_iGoalsScored) + "/" + std::to_string(m_iNumberOfBallsToWin), std::to_string(m_iPlatformsPlaced) + "/" + std::to_string(m_iPlatformLimit));
+
 	if (!m_bLevelHasStarted && m_bIsPlacingPlatform) //If the game hasn't started yet.
 	{
 		m_platformPlacement();

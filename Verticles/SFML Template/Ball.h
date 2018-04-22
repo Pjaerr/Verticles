@@ -15,15 +15,14 @@
 */
 class Ball : public Body, public sf::Drawable
 {
-	private:
-		sf::Texture m_texture; //!< The texture applied to the sprite.
+private:
 
 		sf::CircleShape m_circle;
 
 		/*! \brief Initialises the sprite as per the texture file path and this object's dynamic body.
 		*	\param textureFilePath The path to the texture this object's sprite should use.
 		*/
-		void m_setupTexture(std::string textureFilePath);
+		void m_setupTexture(sf::Texture * texture);
 
 		/*OVERRIDEN FUNCTIONALITY FROM BODY.H*/
 		void onCollisionEnter(Body * otherBody);
@@ -36,7 +35,7 @@ class Ball : public Body, public sf::Drawable
 		*	\param fRadius The width and height of this object's sprite.
 		*	\param world Pointer to the b2World being used to manage the physics.
 		*/
-		Ball(std::string textureFilePath, b2Vec2 pos, float fRadius, b2World * world);
+		Ball(sf::Texture * texture, b2Vec2 pos, float fRadius, b2World * world);
 
 		bool m_bHasHitGoal = false; //!< True if the ball has collided with a goal. Also acts as its safe to delete check.
 

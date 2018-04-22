@@ -52,7 +52,7 @@ Game::~Game()
 */
 void Game::Start()
 {
-	m_level->m_addLevel("./resources/Levels/level6.txt", "level1");
+	m_level->m_addLevel("./resources/Levels/level1.txt", "level1");
 	m_level->m_addLevel("./resources/Levels/level2.txt", "level2");
 	m_level->m_addLevel("./resources/Levels/level3.txt", "level3");
 	m_level->m_addLevel("./resources/Levels/level4.txt", "level3");

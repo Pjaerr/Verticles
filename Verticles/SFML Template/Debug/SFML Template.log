@@ -1,7 +1,7 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SFML Template.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Game.cpp
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\game.cpp(11): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\game.cpp(13): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\game.cpp(14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  HUD.cpp
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\hud.cpp(17): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\hud.cpp(20): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\pjaer\desktop\projects\wip\university\verticles\verticles\sfml template\hud.cpp(22): warning C4305: 'argument': truncation from 'double' to 'float'
   SFML Template.vcxproj -> C:\Users\Pjaer\Desktop\Projects\WIP\University\Verticles\Verticles\Debug\Verticles.exe
   SFML Template.vcxproj -> C:\Users\Pjaer\Desktop\Projects\WIP\University\Verticles\Verticles\Debug\Verticles.pdb (Full PDB)
