@@ -332,9 +332,31 @@ void Level::m_update(float fElapsedTime)
 {
 	m_hud->m_update(std::to_string(m_iGoalsScored) + "/" + std::to_string(m_iNumberOfBallsToWin), std::to_string(m_iPlatformsPlaced) + "/" + std::to_string(m_iPlatformLimit));
 
+	if (m_hud->m_platformPlacementButtonIsPressed)
+	{
+		m_intiatePlatformPlacement();
+
+		m_hud->m_platformPlacementButtonIsPressed = false;
+	}
+
+	if (m_hud->m_menuPlayButtonIsPressed)
+	{
+		m_startLevel("level1");
+
+		m_hud->m_gameStarted = true;
+
+		m_hud->m_menuPlayButtonIsPressed = false;
+	}
+	
+
 	if (!m_bLevelHasStarted && m_bIsPlacingPlatform) //If the game hasn't started yet.
 	{
 		m_platformPlacement();
+		m_hud->m_showControls = true;
+	}
+	else
+	{
+		m_hud->m_showControls = false;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) //Restart level.

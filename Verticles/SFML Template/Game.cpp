@@ -70,6 +70,8 @@ void Game::Start()
 */
 void Game::Update(float fElapsedTime)
 {
+	m_level->m_hud->m_updateMousePosition(m_window);
+
 	/*Temporary way to resume/pause the game.*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
@@ -78,11 +80,6 @@ void Game::Update(float fElapsedTime)
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
 	{
 		m_level->m_pause();
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-	{
-		m_level->m_intiatePlatformPlacement();
 	}
 
 	/*Temporary way to exit window.*/
@@ -126,6 +123,14 @@ void Game::m_run()
 			if (event.type == event.Closed)
 			{
 				m_window->close();
+			}
+			else if (event.type == event.MouseMoved)
+			{
+				m_level->m_hud->m_updateMousePosition(m_window);
+			}
+			else if (event.type == event.MouseButtonPressed)
+			{
+				m_level->m_hud->m_mouseClicked();
 			}
 		}
 

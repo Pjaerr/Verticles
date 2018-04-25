@@ -23,7 +23,6 @@ class Level : public sf::Drawable
 private:
 
 	DataManager m_dataManager; //!< Used to access textures and fonts.
-	HUD * m_hud;
 
 	//Level Attributes
 	bool m_bIsPaused = true; //!< False if no longer in the platform placement phase where balls can fall.
@@ -65,7 +64,6 @@ private:
 	std::string m_currentLevel; //!< Name of current level in the m_levels map.
 
 public:
-
 	Level(b2Vec2 worldSize); //!< The default constructor.
 	~Level(); //!< The deconstructor, deletes pointers that have been allocated via the new keyword.
 
@@ -74,6 +72,8 @@ public:
 	void m_resetLevel(); //!< Re-loads the current level.
 
 	Physics * m_physics = nullptr; //!< The Physics object that keeps track of Box2D and updates the b2World* being used.
+
+	HUD * m_hud = nullptr;
 
 	/*! \brief Adds a level to the m_levels map.
 	*	\param filePath The filepath to associate this level with.
