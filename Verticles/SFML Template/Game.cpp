@@ -60,7 +60,8 @@ void Game::Start()
 	m_level->m_addLevel("./resources/Levels/level6.txt", "level6");
 	m_level->m_addLevel("./resources/Levels/level7.txt", "level7");
 
-	m_level->m_startLevel("level1");
+	m_level->m_ui->m_menuPlayButton.m_setOnClickEvent(std::bind(&Level::m_start, m_level));
+	m_level->m_ui->m_pauseButton.m_setOnClickEvent(std::bind(&Level::m_pauseGame, m_level));
 }
 
 /*!
@@ -70,17 +71,7 @@ void Game::Start()
 */
 void Game::Update(float fElapsedTime)
 {
-	m_level->m_hud->m_updateMousePosition(m_window);
-
-	/*Temporary way to resume/pause the game.*/
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-	{
-		m_level->m_resume();
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
-	{
-		m_level->m_pause();
-	}
+	m_level->m_ui->m_updateMousePosition(m_window);
 
 	/*Temporary way to exit window.*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -126,11 +117,11 @@ void Game::m_run()
 			}
 			else if (event.type == event.MouseMoved)
 			{
-				m_level->m_hud->m_updateMousePosition(m_window);
+				m_level->m_ui->m_updateMousePosition(m_window);
 			}
 			else if (event.type == event.MouseButtonPressed)
 			{
-				m_level->m_hud->m_mouseClicked();
+				m_level->m_ui->m_mouseClicked();
 			}
 		}
 

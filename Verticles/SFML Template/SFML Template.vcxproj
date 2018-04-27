@@ -151,11 +151,14 @@
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="ContactListener.cpp" />
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Goal.cpp" />
-    <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="Text.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Physics.cpp" />
@@ -164,11 +167,14 @@
   <ItemGroup>
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Body.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="ContactListener.h" />
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Goal.h" />
-    <ClInclude Include="HUD.h" />
+    <ClInclude Include="Panel.h" />
+    <ClInclude Include="Text.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Platform.h" />

@@ -6,7 +6,7 @@
 #include "Physics.h"
 
 #include "DataManager.h"
-#include "HUD.h"
+#include "UI.h"
 
 #include <memory>
 #include <map>
@@ -29,6 +29,8 @@ private:
 	bool m_bIsPlacingPlatform = false; //!< True if a platform is currently being placed.
 	bool m_bLevelHasStarted = false; //!< True once m_resume() has been called once. (stops platform placement)
 
+	bool m_bLevelIsWon = false;
+
 	int m_iNumberOfBalls; //!< The number of balls that exist within the level.
 	int m_iNumberOfBallsToWin; //!< The number of balls that need to go into a goal to win the level.
 	int m_iGoalsScored = 0; //!< The number of goals that have been scored.
@@ -48,7 +50,7 @@ private:
 	/*! \brief Starts the relevant ending scenarios.
 	*	\param bLevelIsWon True if won, false if loss.
 	*/
-	void m_levelOver(bool bLevelIsWon);
+	void m_levelOver();
 
 	void m_platformPlacement(); //!< Allows a temporary platform to be moved around and placed in the level.
 
@@ -73,7 +75,7 @@ public:
 
 	Physics * m_physics = nullptr; //!< The Physics object that keeps track of Box2D and updates the b2World* being used.
 
-	HUD * m_hud = nullptr;
+	UI * m_ui = nullptr;
 
 	/*! \brief Adds a level to the m_levels map.
 	*	\param filePath The filepath to associate this level with.
@@ -85,6 +87,8 @@ public:
 	*	\param name The name of the level to start.
 	*/
 	void m_startLevel(std::string name);
+
+	void m_start();
 
 	/*! \brief The virtual draw function taken from sf::Drawable.*/
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -99,6 +103,8 @@ public:
 
 	/*! \brief Sets m_bIsPaused to true.*/
 	void m_pause();
+
+	void m_pauseGame();
 
 	/*! \brief Starts the platform placement.*/
 	void m_intiatePlatformPlacement();

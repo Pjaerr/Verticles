@@ -10,14 +10,21 @@ Level::Level(b2Vec2 worldSize)
 	m_dataManager.m_addTexture("goal", "./resources/Textures/target.png");
 	m_dataManager.m_addTexture("ball", "./resources/Textures/ball.png");
 
-	m_hud = new HUD(m_dataManager.m_getFont());
+	m_ui = new UI(m_dataManager.m_getFont());
+	
+	m_ui->m_platformPlacementButton.m_setOnClickEvent(std::bind(&Level::m_intiatePlatformPlacement, this));
+
+	m_ui->m_resetLevelButton.m_setOnClickEvent(std::bind(&Level::m_resetLevel, this));
+
+	m_ui->m_endScreenLossButton.m_setOnClickEvent(std::bind(&Level::m_levelOver, this));
+	m_ui->m_endScreenWinButton.m_setOnClickEvent(std::bind(&Level::m_levelOver, this));
 }
 
 /*! The deconstructor, deletes pointers to the balls, platforms and goals.*/
 Level::~Level()
 {
 	delete m_physics;
-	delete m_hud;
+	delete m_ui;
 }
 
 void Level::m_clearData()
@@ -59,6 +66,8 @@ void Level::m_clearData()
 
 void Level::m_resetLevel()
 {
+	m_pause();
+
 	m_clearData();
 
 	m_newLevel(m_levels.at(m_currentLevel).c_str());
@@ -79,6 +88,16 @@ void Level::m_startLevel(std::string name)
 	else 
 	{
 		std::cout << "A level doesn't exist with the name " << name << std::endl;
+	}
+}
+
+void Level::m_start()
+{
+	if (m_ui->m_showMainMenu)
+	{
+		m_ui->m_showMainMenu = false;
+
+		m_startLevel("level1");
 	}
 }
 
@@ -193,6 +212,8 @@ void Level::m_newLevel(const char * filePath)
 		//Create a new Ball object and push it to the collection of balls at the given position in m_entryPoints.
 		m_balls.push_back(std::unique_ptr<Ball>(new Ball(m_dataManager.m_getTexture("ball"), pos, 0.1f, m_physics->m_getWorld())));
 	}
+
+	m_ui->m_pauseButton.m_setText("Start", 14, m_dataManager.m_getFont());
 }
 
 /*! Resumes the game by setting m_bIsPaused to false.*/
@@ -200,6 +221,7 @@ void Level::m_resume()
 {
 	if (!m_bIsPlacingPlatform)
 	{
+		m_ui->m_pauseButton.m_setText("Pause", 14, m_dataManager.m_getFont());
 		m_bLevelHasStarted = true;
 		m_bIsPaused = false;
 	}
@@ -208,31 +230,46 @@ void Level::m_resume()
 /*! Pauses the game by setting m_bIsPaused to true.*/
 void Level::m_pause()
 {
+	m_ui->m_pauseButton.m_setText("Resume", 14, m_dataManager.m_getFont());
 	m_bIsPaused = true;
+}
+
+void Level::m_pauseGame()
+{
+	if (m_bIsPaused)
+	{
+		m_resume();
+	}
+	else
+	{
+		m_pause();
+	}
 }
 
 void Level::m_intiatePlatformPlacement()
 {
-	if (!m_bIsPlacingPlatform && m_iPlatformsPlaced < m_iPlatformLimit)
+	if (!m_bLevelHasStarted)
 	{
-		m_bIsPlacingPlatform = true;
+		if (!m_bIsPlacingPlatform && m_iPlatformsPlaced < m_iPlatformLimit)
+		{
+			m_bIsPlacingPlatform = true;
 
-		m_tempPlatform = sf::RectangleShape(sf::Vector2f(4.0f, 0.5f));
-		
-		m_tempPlatform.setOrigin(sf::Vector2f(m_tempPlatform.getGlobalBounds().width / 2, m_tempPlatform.getGlobalBounds().height / 2));
+			m_tempPlatform = sf::RectangleShape(sf::Vector2f(4.0f, 0.5f));
 
-		m_tempPlatform.setPosition(sf::Vector2f(m_physics->m_getWorldSize().x / 2, m_physics->m_getWorldSize().y / 2));
+			m_tempPlatform.setOrigin(sf::Vector2f(m_tempPlatform.getGlobalBounds().width / 2, m_tempPlatform.getGlobalBounds().height / 2));
 
-		m_tempPlatform.setFillColor(sf::Color::Green);
+			m_tempPlatform.setPosition(sf::Vector2f(m_physics->m_getWorldSize().x / 2, m_physics->m_getWorldSize().y / 2));
 
-		m_iPlatformsPlaced++;
+			m_tempPlatform.setFillColor(sf::Color::Green);
+
+			m_iPlatformsPlaced++;
+		}
+		else
+		{
+			//Change from console log to HUD text.
+			std::cout << "Cannot place a platform!" << std::endl;
+		}
 	}
-	else
-	{
-		//Change from console log to HUD text.
-		std::cout << "Cannot place a platform!" << std::endl;
-	}
-	
 }
 
 /*! The sf::Drawable virtual draw function. Draws all of the balls, platforms and goals this level uses.*/
@@ -265,7 +302,7 @@ void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(rekt);
 	}
 
-	target.draw(*m_hud);
+	target.draw(*m_ui);
 	
 }
 
@@ -314,7 +351,7 @@ void Level::m_platformPlacement()
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		m_bIsPlacingPlatform = false;
 
@@ -330,44 +367,21 @@ void Level::m_platformPlacement()
 */
 void Level::m_update(float fElapsedTime)
 {
-	m_hud->m_update(std::to_string(m_iGoalsScored) + "/" + std::to_string(m_iNumberOfBallsToWin), std::to_string(m_iPlatformsPlaced) + "/" + std::to_string(m_iPlatformLimit));
-
-	if (m_hud->m_platformPlacementButtonIsPressed)
-	{
-		m_intiatePlatformPlacement();
-
-		m_hud->m_platformPlacementButtonIsPressed = false;
-	}
-
-	if (m_hud->m_menuPlayButtonIsPressed)
-	{
-		m_startLevel("level1");
-
-		m_hud->m_gameStarted = true;
-
-		m_hud->m_menuPlayButtonIsPressed = false;
-	}
-	
+	m_ui->m_updateText(std::to_string(m_iGoalsScored) + "/" + std::to_string(m_iNumberOfBallsToWin), std::to_string(m_iPlatformsPlaced) + "/" + std::to_string(m_iPlatformLimit));
 
 	if (!m_bLevelHasStarted && m_bIsPlacingPlatform) //If the game hasn't started yet.
 	{
 		m_platformPlacement();
-		m_hud->m_showControls = true;
+		m_ui->m_showControls = true;
 	}
 	else
 	{
-		m_hud->m_showControls = false;
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) //Restart level.
-	{
-		m_pause();
-
-		m_resetLevel();
+		m_ui->m_showControls = false;
 	}
 
 	if (!m_bIsPaused)
 	{
+		std::cout << "Current Level: " << m_currentLevel << std::endl;
 		m_physics->m_updateWorld(fElapsedTime);
 
 		for (int i = 0; i < m_balls.size(); i++)
@@ -377,18 +391,27 @@ void Level::m_update(float fElapsedTime)
 
 		if (m_iGoalsScored >= m_iNumberOfBallsToWin)
 		{
-			m_levelOver(true);
+			m_pause();
+			m_bLevelIsWon = true;
+			m_ui->m_endScreenText.m_setText("You Win!");
+			m_ui->m_showEndScreenWin = true;
 		}
 
 		if (m_balls.empty())
 		{
 			if (m_iGoalsScored >= m_iNumberOfBallsToWin)
 			{
-				m_levelOver(true);
+				m_pause();
+				m_bLevelIsWon = true;
+				m_ui->m_endScreenText.m_setText("You Win!");
+				m_ui->m_showEndScreenWin = true;
 			}
 			else
 			{
-				m_levelOver(false);
+				m_pause();
+				m_bLevelIsWon = false;
+				m_ui->m_endScreenText.m_setText("You Lose!");
+				m_ui->m_showEndScreenLoss = true;
 			}
 		}
 		
@@ -416,13 +439,11 @@ void Level::m_update(float fElapsedTime)
 	}
 }
 
-void Level::m_levelOver(bool bLevelIsWon)
+void Level::m_levelOver()
 {
-	m_pause();
-
-	if (bLevelIsWon)
+	if (m_bLevelIsWon)
 	{
-		std::cout << "You win!" << std::endl;
+		m_ui->m_showEndScreenWin = false;
 
 		auto current = m_levels.find(m_currentLevel);
 		auto next = std::next(current, 1);
@@ -434,7 +455,8 @@ void Level::m_levelOver(bool bLevelIsWon)
 	}
 	else
 	{
-		std::cout << "You lose!" << std::endl;
+		m_ui->m_showEndScreenLoss = false;
+
 		m_resetLevel();
 	}
 }
