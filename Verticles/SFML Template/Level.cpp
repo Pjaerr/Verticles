@@ -452,6 +452,10 @@ void Level::m_levelOver()
 		{
 			m_startLevel(next->first);
 		}
+		else
+		{
+			m_ui->m_showMainMenu = true;
+		}
 	}
 	else
 	{
