@@ -1,6 +1,7 @@
 #include "UI.h"
 #include <iostream>
 
+/*! Sets up all of the UI this class uses.*/
 UI::UI(sf::Font * font)
 {
 	m_font = font;
@@ -37,12 +38,16 @@ UI::UI(sf::Font * font)
 	m_resetLevelButton.m_setText("Reset", 14, font);
 }
 
+/*! Updates the balls and platform text.*/
 void UI::m_updateText(std::string ballsText, std::string platformsText)
 {
 	m_ballsText.m_setText("Balls: " + ballsText);
 	m_platformsText.m_setText("Platforms: " + platformsText);
 }
 
+/*! sf::Drawable virtual draw function, draws UI that is decided to be
+*	shown.
+*/
 void UI::draw(sf::RenderTarget & target, sf::RenderStates states) const
 {
 	if (m_showMainMenu)
@@ -86,26 +91,37 @@ void UI::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	}
 }
 
+/*! Updates the mouse position relative to a given sf::RenderWindow and then
+*	stores them in m_mousePos.
+*/
 void UI::m_updateMousePosition(sf::RenderWindow * relativeTo)
 {
 	m_mousePos = relativeTo->mapPixelToCoords(sf::Mouse::getPosition(*relativeTo));
 }
 
+/*! Called when the mouse is clicked via an sf::Event. Listens for all click
+*	of all of the buttons that are active.
+*/
 void UI::m_mouseClicked()
 {
-	m_menuPlayButton.m_listenForClickEvent(m_mousePos);
-
-	m_resetLevelButton.m_listenForClickEvent(m_mousePos);
-
-	m_platformPlacementButton.m_listenForClickEvent(m_mousePos);
-	m_pauseButton.m_listenForClickEvent(m_mousePos);
-
-	if (m_showEndScreenWin)
+	if (m_showMainMenu)
 	{
-		m_endScreenWinButton.m_listenForClickEvent(m_mousePos);
+		m_menuPlayButton.m_listenForClickEvent(m_mousePos);
 	}
-	else if (m_showEndScreenLoss)
+	else
 	{
-		m_endScreenLossButton.m_listenForClickEvent(m_mousePos);
+		m_resetLevelButton.m_listenForClickEvent(m_mousePos);
+
+		m_platformPlacementButton.m_listenForClickEvent(m_mousePos);
+		m_pauseButton.m_listenForClickEvent(m_mousePos);
+
+		if (m_showEndScreenWin)
+		{
+			m_endScreenWinButton.m_listenForClickEvent(m_mousePos);
+		}
+		else if (m_showEndScreenLoss)
+		{
+			m_endScreenLossButton.m_listenForClickEvent(m_mousePos);
+		}
 	}
 }

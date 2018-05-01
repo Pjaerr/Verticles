@@ -30,14 +30,18 @@ class Physics
 		/*! \brief Returns the b2World being used.*/
 		b2World* m_getWorld();
 
-		b2Vec2 m_worldSize;
+		b2Vec2 m_worldSize; //!< The size of the Box2D world in meters.
 
+		/*! \brief Returns m_worldSize*/
 		b2Vec2 m_getWorldSize();
 
 	private:
 		int m_iVelocityIterations; //!< The number of velocity iterations on each world update.
 		int m_iPositionIterations; //!< The number of position iterations on each world update.
-		ContactListener m_contactListener;
+
+		ContactListener m_contactListener; //!< The ContactListener that listens for Body->Body collisions.
+
 		b2Vec2 m_gravity; //!< The gravity this b2World uses.
+
 		b2World *m_world = nullptr; //!< Pointer to the b2World the game uses.
 };

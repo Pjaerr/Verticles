@@ -56,5 +56,5 @@ class Game
 		/*! \brief The Render function is called every frame and should be used exclusively for the drawing of objects.*/
 		void Render();
 
-		Level * m_level;
+		Level * m_level; //!< The level object that controls all of the 'Verticles' game.
 };

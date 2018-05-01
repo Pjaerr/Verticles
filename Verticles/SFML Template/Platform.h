@@ -2,7 +2,6 @@
 
 #include "Body.h"
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 /*!\class Platform
 *	\brief The class that acts as a static collidable platform in the game world.

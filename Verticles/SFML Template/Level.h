@@ -17,6 +17,8 @@
 *
 *	Creates a level or 'scene' within a game, contains functionality for placing platforms
 *	as well as resuming or pausing the game as well as keeping track of the score.
+*
+*	The level class is essentially the entire game, with parts extracted out.
 */
 class Level : public sf::Drawable
 {
@@ -29,7 +31,7 @@ private:
 	bool m_bIsPlacingPlatform = false; //!< True if a platform is currently being placed.
 	bool m_bLevelHasStarted = false; //!< True once m_resume() has been called once. (stops platform placement)
 
-	bool m_bLevelIsWon = false;
+	bool m_bLevelIsWon = false; //!< True if the level has been won.
 
 	int m_iNumberOfBalls; //!< The number of balls that exist within the level.
 	int m_iNumberOfBallsToWin; //!< The number of balls that need to go into a goal to win the level.
@@ -58,8 +60,6 @@ private:
 	*	\param filePath A string referencing a filepath from which to load the level.
 	*/
 	void m_newLevel(const char * filePath);
-
-	std::map<std::string, std::string> m_textures;
 
 	std::map<std::string, std::string> m_levels; //!< Holds level filepaths and corresponding names.
 

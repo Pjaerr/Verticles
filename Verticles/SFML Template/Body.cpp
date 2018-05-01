@@ -6,30 +6,38 @@ void Body::m_destroySelf()
 	m_body->GetWorld()->DestroyBody(m_body);
 }
 
+/*! Returns the position of the m_body on this class.*/
 b2Vec2 Body::m_getPosition()
 {
 	return b2Vec2(m_body->GetPosition().x, m_body->GetPosition().y);
 }
 
+/*! Returns the rotation of the m_body on this class.*/
 float Body::m_fGetRotation()
 {
 	return m_body->GetAngle() * RAD2DEG;
 }
 
+/*! Returns the radius of the m_body on this class. 0 if body is setup as a box.*/
 float Body::m_fGetRadius()
 {
 	return m_fRadius;
 }
 
+/*! Returns the size that the m_body on this class was set to during setup.*/
 b2Vec2 Body::getSize()
 {
 	return m_size;
 }
 
+/*! To be overridden by child classes and contain code that occurs when it collides with
+another Body.*/
 void Body::onCollisionEnter(Body * otherBody)
 {
 }
 
+/*! To be overridden by child classes and contain code that occurs when it stops colliding
+with another Body.*/
 void Body::onCollisionExit(Body * otherBody)
 {
 }
@@ -56,10 +64,10 @@ void Body::m_setupBody(b2BodyType bodyType, const b2Shape* shape, b2Vec2 positio
 
 	bodyDef.position.Set(position.x, position.y);
 
-	bodyDef.angle = fRotation * DEG2RAD; //Set body rotation to fRotation in radians.
+	bodyDef.angle = fRotation * DEG2RAD;
 	
 	m_body = world->CreateBody(&bodyDef);
-	m_body->SetUserData(self);
+	m_body->SetUserData(self); //Store a pointer to the child class on the body.
 
 	fixtureDef.shape = shape;
 
@@ -101,6 +109,7 @@ void Body::m_setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadi
 	m_setupBody(bodyType, &circleShape, position, 0.0f, world, self, isSensor);
 }
 
+/*! Sets the tag that this Body should be associated with.*/
 void Body::m_setTag(std::string tag)
 {
 	m_tag = tag;

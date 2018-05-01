@@ -1,4 +1,12 @@
 ﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SFML Template.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  UI.cpp
+  Game.cpp
+c:\users\pjaer\desktop\university\verticles\verticles\sfml template\game.cpp(11): warning C4244: 'argument': conversion from 'float' to 'unsigned int', possible loss of data
+c:\users\pjaer\desktop\university\verticles\verticles\sfml template\game.cpp(13): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\pjaer\desktop\university\verticles\verticles\sfml template\game.cpp(14): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  Main.cpp
   Level.cpp
 c:\users\pjaer\desktop\university\verticles\verticles\sfml template\level.cpp(202): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 c:\users\pjaer\desktop\university\verticles\verticles\sfml template\level.cpp(206): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
@@ -7,5 +15,6 @@ c:\users\pjaer\desktop\university\verticles\verticles\sfml template\level.cpp(28
 c:\users\pjaer\desktop\university\verticles\verticles\sfml template\level.cpp(293): warning C4018: '<': signed/unsigned mismatch
 c:\users\pjaer\desktop\university\verticles\verticles\sfml template\level.cpp(298): warning C4018: '<': signed/unsigned mismatch
 c:\users\pjaer\desktop\university\verticles\verticles\sfml template\level.cpp(387): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   SFML Template.vcxproj -> C:\Users\Pjaer\Desktop\University\Verticles\Verticles\Debug\Verticles.exe
   SFML Template.vcxproj -> C:\Users\Pjaer\Desktop\University\Verticles\Verticles\Debug\Verticles.pdb (Full PDB)

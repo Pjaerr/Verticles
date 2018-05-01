@@ -13,7 +13,7 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	m_iWindowWidth = fWidth;
 	m_iWindowHeight = fHeight;
 
-	b2Vec2 worldSize = b2Vec2(8, 6);
+	b2Vec2 worldSize = b2Vec2(8, 6); //The size of the world in meters.
 
 
 	//sf::View set at (0,0) with a size of the physical world size.
@@ -38,6 +38,7 @@ Game::Game(float fWidth, float fHeight, std::string name)
 	}
 }
 
+/*! The deconstructor, deallocates memory for the sf::RenderWindow, the Level and the background texture.*/
 Game::~Game()
 {
 	delete m_window;
@@ -52,6 +53,7 @@ Game::~Game()
 */
 void Game::Start()
 {
+	/*Add level files as levels to be loaded to the Level object.*/
 	m_level->m_addLevel("./resources/Levels/level1.txt", "level1");
 	m_level->m_addLevel("./resources/Levels/level2.txt", "level2");
 	m_level->m_addLevel("./resources/Levels/level3.txt", "level3");
@@ -60,6 +62,7 @@ void Game::Start()
 	m_level->m_addLevel("./resources/Levels/level6.txt", "level6");
 	m_level->m_addLevel("./resources/Levels/level7.txt", "level7");
 
+	/*Setup the main menu buttons.*/
 	m_level->m_ui->m_menuPlayButton.m_setOnClickEvent(std::bind(&Level::m_start, m_level));
 	m_level->m_ui->m_pauseButton.m_setOnClickEvent(std::bind(&Level::m_pauseGame, m_level));
 }
@@ -71,15 +74,13 @@ void Game::Start()
 */
 void Game::Update(float fElapsedTime)
 {
-	m_level->m_ui->m_updateMousePosition(m_window);
-
-	/*Temporary way to exit window.*/
+	/*Exit the game.*/
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 	{
 		m_window->close();
 	}
 
-	m_level->m_update(fElapsedTime);
+	m_level->m_update(fElapsedTime); //Update the level. (includes physics updates)
 }
 
 /*!
@@ -122,6 +123,10 @@ void Game::m_run()
 			else if (event.type == event.MouseButtonPressed)
 			{
 				m_level->m_ui->m_mouseClicked();
+			}
+			else if (event.type == event.Resized)
+			{
+				m_window->setView(m_view);
 			}
 		}
 

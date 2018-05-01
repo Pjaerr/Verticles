@@ -1,5 +1,6 @@
 #include "Physics.h"
 
+/*! The deconstructor deallocates memory for the b2World.*/
 Physics::~Physics()
 {
 	delete m_world;
@@ -37,6 +38,7 @@ b2World* Physics::m_getWorld()
 	return m_world;
 }
 
+/*! Returns m_worldSize.*/
 b2Vec2 Physics::m_getWorldSize()
 {
 	return m_worldSize;

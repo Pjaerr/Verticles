@@ -1,5 +1,4 @@
 #include "Body.h"
-#include <iostream>
 #include <SFML\Graphics.hpp>
 
 /*! \file Ball.h
@@ -17,12 +16,13 @@ class Ball : public Body, public sf::Drawable
 {
 private:
 
-		sf::CircleShape m_circle;
+		sf::CircleShape m_circle; //!< The shape this objects texture is applied to. Takes properties from Body.
 
 		/*! \brief Initialises the sprite as per the texture file path and this object's dynamic body.
 		*	\param textureFilePath The path to the texture this object's sprite should use.
 		*/
 		void m_setupTexture(sf::Texture * texture);
+
 
 		/*OVERRIDEN FUNCTIONALITY FROM BODY.H*/
 		void onCollisionEnter(Body * otherBody);

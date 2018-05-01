@@ -101,6 +101,9 @@ public:
 		*/
 		void m_setupBodyAsCircle(b2BodyType bodyType, b2Vec2 position, float fRadius, b2World * world, void * self, bool isSensor);
 
+		/*! \brief Sets the tag that this Body should be associated with.
+		*	\param tag The tag.
+		*/
 		void m_setTag(std::string tag);
 };
 
